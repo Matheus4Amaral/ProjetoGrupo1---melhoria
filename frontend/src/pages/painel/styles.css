@@ -1,0 +1,28 @@
+.painel-card {
+    width: 420px;
+    max-width: 100%;
+
+    background: white;
+
+    padding: 40px;
+
+    border-radius: 16px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 16px;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, .08);
+}
+
+.painel-titulo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #1f2a37;
+}
+
+.painel-subtitulo {
+    color: #6b7785;
+    line-height: 1.5;
+}

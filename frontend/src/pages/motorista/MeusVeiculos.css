@@ -1,0 +1,227 @@
+.veiculos {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.veiculos-voltar {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    width: fit-content;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-700);
+    text-decoration: none;
+}
+.veiculos-voltar:hover { color: var(--ink-900); }
+
+.veiculos-cabecalho h1 {
+    font-family: var(--font-display);
+    font-size: 24px;
+    color: var(--ink-900);
+}
+.veiculos-cabecalho p {
+    margin-top: 4px;
+    font-size: 14px;
+    color: var(--ink-700);
+}
+
+/* formulario */
+.veiculos-form {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-1);
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.veiculos-form h2 {
+    font-family: var(--font-display);
+    font-size: 16px;
+    color: var(--ink-900);
+}
+
+.veiculos-form-grade {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.veiculos-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.veiculos-campo label {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--ink-700);
+}
+
+.veiculos-input {
+    height: 42px;
+    padding: 0 12px;
+    border: 1px solid #dfe4e7;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    color: var(--ink-900);
+    background: var(--white);
+}
+.veiculos-input:focus-visible {
+    border-color: var(--sky-400);
+    box-shadow: var(--shadow-focus);
+}
+
+.veiculos-form-acoes {
+    display: flex;
+    gap: 10px;
+}
+
+.veiculos-botao {
+    height: 44px;
+    padding: 0 22px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: var(--ink-900);
+    color: var(--white);
+    font-weight: 600;
+    font-size: 14px;
+}
+.veiculos-botao:hover:not(:disabled) { background: var(--ink-700); }
+.veiculos-botao:disabled { opacity: 0.6; cursor: default; }
+
+.veiculos-botao--secundario {
+    background: var(--neutral-50);
+    color: var(--ink-700);
+    border: 1px solid #dfe4e7;
+}
+.veiculos-botao--secundario:hover:not(:disabled) { background: #e8eaeb; }
+
+/* avisos */
+.veiculos-aviso {
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 13.5px;
+}
+.veiculos-aviso--erro { background: #fdecec; color: #b42318; }
+.veiculos-aviso--sucesso { background: #e7f7ee; color: #1a7f4b; }
+
+/* lista */
+.veiculos-lista-cabecalho {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 4px;
+}
+.veiculos-lista-cabecalho h2 {
+    font-family: var(--font-display);
+    font-size: 16px;
+    color: var(--ink-900);
+}
+.veiculos-contagem {
+    min-width: 24px;
+    height: 22px;
+    padding: 0 8px;
+    border-radius: 999px;
+    background: var(--sky-100);
+    color: var(--ink-900);
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.veiculos-estado {
+    padding: 24px;
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-1);
+    color: var(--ink-700);
+    font-size: 14px;
+    text-align: center;
+}
+
+.veiculos-lista {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.veiculos-cartao {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-1);
+    padding: 14px 16px;
+    border: 1px solid transparent;
+}
+.veiculos-cartao--editando {
+    border-color: var(--sky-400);
+    box-shadow: var(--shadow-focus);
+}
+
+.veiculos-cartao-placa {
+    flex-shrink: 0;
+    min-width: 96px;
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    background: var(--ink-900);
+    color: var(--white);
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+.veiculos-cartao-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+.veiculos-cartao-modelo {
+    font-weight: 600;
+    font-size: 14.5px;
+    color: var(--ink-900);
+}
+.veiculos-cartao-detalhes {
+    font-size: 13px;
+    color: var(--ink-700);
+}
+
+.veiculos-cartao-acoes {
+    flex-shrink: 0;
+    display: flex;
+    gap: 8px;
+}
+
+.veiculos-cartao-editar,
+.veiculos-cartao-remover {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: var(--neutral-50);
+    color: var(--ink-700);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.veiculos-cartao-editar:hover { background: var(--sky-100); color: var(--ink-900); }
+.veiculos-cartao-remover:hover { background: #fdecec; color: #b42318; }
+
+@media (max-width: 720px) {
+    .veiculos-form-grade { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+    .veiculos-form-grade { grid-template-columns: 1fr; }
+}

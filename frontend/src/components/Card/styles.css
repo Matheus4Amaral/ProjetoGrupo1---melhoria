@@ -1,0 +1,9 @@
+.kpi-card {
+  background: #17313E;
+  border-radius: 12px;
+  padding: 16px;
+  color: white;
+}
+.kpi-card .label { font-size: 13px; opacity: 0.7; }
+.kpi-card .value { font-size: 28px; font-weight: bold; }
+.kpi-card .delta { font-size: 12px; margin-top: 4px; }

@@ -1,0 +1,58 @@
+.cidade-select {
+    position: relative;
+}
+
+.cidade-select-lista {
+    position: absolute;
+    z-index: 20;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+
+    max-height: 220px;
+    overflow-y: auto;
+
+    background: white;
+    border: 1px solid #B5F1F5;
+    border-radius: 8px;
+    box-shadow: 0 12px 24px rgba(30, 90, 130, .18);
+
+    list-style: none;
+    margin: 0;
+    padding: 6px;
+}
+
+.cidade-select-lista li + li {
+    margin-top: 2px;
+}
+
+.cidade-select-lista button {
+    width: 100%;
+    text-align: left;
+
+    background: none;
+    border: none;
+    border-radius: 6px;
+
+    padding: 8px 10px;
+
+    font-size: 14px;
+    color: #1f2a37;
+
+    cursor: pointer;
+}
+
+.cidade-select-lista button:hover {
+    background: #F3F3F3;
+}
+
+.cidade-select-lista button span {
+    color: #7a8794;
+    font-size: 12px;
+}
+
+.cidade-select-info {
+    padding: 8px 10px;
+    font-size: 13px;
+    color: #7a8794;
+}

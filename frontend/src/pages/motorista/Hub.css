@@ -1,0 +1,156 @@
+/* hub do motorista */
+.hub-saudacao { margin-bottom: 18px; }
+.hub-saudacao h1 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  line-height: 1.25;
+  color: var(--ink-900);
+}
+.hub-saudacao p { font-size: 13.5px; color: #84959c; margin-top: 6px; }
+
+/* busca */
+.hub-busca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--white);
+  border: 1px solid #E7EBEC;
+  border-radius: 999px;
+  padding: 12px 18px;
+  box-shadow: var(--shadow-1);
+  margin-bottom: 22px;
+  color: #84959c;
+}
+.hub-busca:focus-within { border-color: var(--sky-400); box-shadow: var(--shadow-focus); }
+.hub-busca svg { flex-shrink: 0; }
+.hub-busca input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  font-size: 14.5px;
+  color: var(--ink-900);
+}
+.hub-busca input:focus { box-shadow: none; }
+.hub-busca input::-webkit-search-cancel-button { display: none; }
+
+.hub-busca-limpar {
+  border: none;
+  background: var(--neutral-50);
+  color: var(--ink-700);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 11px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.hub-busca-limpar:hover { background: var(--sky-100); color: var(--sky-500); }
+
+/* estados */
+.hub-estado {
+  background: var(--white);
+  border: 1px solid #EAEDEF;
+  border-radius: var(--radius-md);
+  padding: 40px 16px;
+  text-align: center;
+  font-size: 13.5px;
+  color: #84959c;
+}
+
+.hub-aviso {
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+.hub-aviso--erro { background: #FDECEC; color: #A32B2B; border: 1px solid #F5C9C9; }
+
+/* lista de estacionamentos */
+.hub-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.hub-card {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  text-align: left;
+  background: var(--white);
+  border: 1px solid #EAEDEF;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-1);
+  padding: 16px 18px;
+  transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+}
+.hub-card:hover {
+  border-color: var(--sky-400);
+  box-shadow: var(--shadow-2);
+  transform: translateY(-2px);
+}
+
+.hub-card-icone {
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sky-100);
+  color: var(--sky-500);
+}
+
+.hub-card-info { flex: 1; min-width: 0; display: block; }
+
+.hub-card-nome {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--ink-900);
+}
+.hub-card-endereco,
+.hub-card-cidade {
+  display: block;
+  font-size: 12.5px;
+  color: #84959c;
+  margin-top: 3px;
+}
+
+.hub-card-selos {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.hub-selo {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.hub-selo--livre { background: #E8F7F0; color: #1F7A57; }
+.hub-selo--lotado { background: #FDECEC; color: #A32B2B; }
+.hub-selo--neutro { background: #F1F3F4; color: #5b7280; }
+
+.hub-card-total { font-size: 11.5px; color: #84959c; }
+
+.hub-card-seta { flex-shrink: 0; color: #B7C3C9; align-self: center; display: flex; }
+.hub-card:hover .hub-card-seta { color: var(--sky-500); }
+
+@media (max-width: 720px) {
+  .hub-saudacao h1 { font-size: 20px; }
+  .hub-lista { grid-template-columns: 1fr; }
+}
