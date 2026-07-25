@@ -1,13 +1,39 @@
 const db = require('../../../database/connection')
 
-class PisoRepository{
+class PisoRepository {
+    // async criarPiso(dados) {
+    //     const [piso] = await db("piso")
+    //         .insert(dados)
+    //         .returning('*')
+
+    //     return piso
+    // }
+
     async criarPiso(dados) {
-        const [piso] = await db("piso")
-            .insert(dados)
-            .returning('*')
-    
-        return piso
+        return await db.transaction(async (trx) => {
+
+            const [piso] = await trx("piso")
+                .insert(dados)
+                .returning("*")
+
+            const vagas = []
+
+            for (let i = 1; i <= dados.vagas; i++) {
+                vagas.push({
+                    piso_id: piso.id,
+                    codigo: `${dados.codigo}-V${String(i).padStart(3, "0")}`,
+                    nome: `Vaga ${i}`,
+                    is_ocupada: false,
+                    em_manutencao: false,
+                })
+            }
+
+            await trx("vaga").insert(vagas)
+
+            return piso
+        })
     }
+
 
     async listarTodosPisos() {
         return await db("piso")
@@ -27,13 +53,13 @@ class PisoRepository{
             .orderBy("piso.andar")
     }
 
-    async buscarPisoPorId(id){
+    async buscarPisoPorId(id) {
         return db("piso")
             .where({ id })
             .first()
     }
 
-    async buscarPisosPorEstacionamentoId(estacionamentoId){
+    async buscarPisosPorEstacionamentoId(estacionamentoId) {
         return await db("piso")
             .join("estacionamento", "estacionamento.id", "piso.estacionamento_id")
             .where("piso.estacionamento_id", estacionamentoId)
@@ -57,13 +83,13 @@ class PisoRepository{
             .first()
     }
 
-    async buscarPisoPorAndar(andar){
+    async buscarPisoPorAndar(andar) {
         return db("piso")
             .where({ andar })
             .select("*")
     }
 
-    async editarPiso(id, dados){
+    async editarPiso(id, dados) {
         const [piso] = await db("piso")
             .where({ id })
             .update({
@@ -75,7 +101,7 @@ class PisoRepository{
         return piso
     }
 
-    async excluirPiso(id){
+    async excluirPiso(id) {
         await db("piso")
             .where({ id })
             .del()

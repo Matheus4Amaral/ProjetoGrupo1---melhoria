@@ -3,37 +3,37 @@ import { useNavigate } from "react-router-dom"
 
 import "./Vagas.css"
 
-import Button from "../../components/Button"
-import Input from "../../components/Input"
+// import Button from "../../components/Button"
+// import Input from "../../components/Input"
 
 import vagaService from "../../services/vagaService"
-import pisoService from "../../services/pisoService"
+// import pisoService from "../../services/pisoService"
 import { useEstacionamentoAtivo } from "../../context/EstacionamentoAtivoContext"
 
-const FORMULARIO_INICIAL = {
-    codigo: "",
-    nome: "",
-    piso_id: "",
-    is_ocupada: false,
-    em_manutencao: false,
-}
+// const FORMULARIO_INICIAL = {
+//     codigo: "",
+//     nome: "",
+//     piso_id: "",
+//     is_ocupada: false,
+//     em_manutencao: false,
+// }
 
 export default function Vagas() {
     const navigate = useNavigate()
     const { estacionamentoAtivoId } = useEstacionamentoAtivo()
 
-    const [modo, setModo] = useState("lista")
+    // const [modo, setModo] = useState("lista")
 
     const [vagas, setVagas] = useState([])
     const [carregandoVagas, setCarregandoVagas] = useState(true)
     const [erroLista, setErroLista] = useState("")
 
-    const [formulario, setFormulario] = useState(FORMULARIO_INICIAL)
-    const [pisos, setPisos] = useState([])
-    const [carregandoPisos, setCarregandoPisos] = useState(true)
-    const [erro, setErro] = useState("")
-    const [sucesso, setSucesso] = useState("")
-    const [salvando, setSalvando] = useState(false)
+    // const [formulario, setFormulario] = useState(FORMULARIO_INICIAL)
+    // const [pisos, setPisos] = useState([])
+    // const [carregandoPisos, setCarregandoPisos] = useState(true)
+    // const [erro, setErro] = useState("")
+    // const [sucesso, setSucesso] = useState("")
+    // const [salvando, setSalvando] = useState(false)
 
     const carregarVagas = useCallback(async () => {
         if (!estacionamentoAtivoId) {
@@ -59,208 +59,208 @@ export default function Vagas() {
         carregarVagas()
     }, [carregarVagas])
 
-    useEffect(() => {
-        async function carregarPisos() {
-            if (!estacionamentoAtivoId) {
-                setPisos([])
-                setCarregandoPisos(false)
-                return
-            }
+    // useEffect(() => {
+    //     async function carregarPisos() {
+    //         if (!estacionamentoAtivoId) {
+    //             setPisos([])
+    //             setCarregandoPisos(false)
+    //             return
+    //         }
 
-            setCarregandoPisos(true)
+    //         setCarregandoPisos(true)
 
-            try {
-                const resultado = await pisoService.listarPorEstacionamento(estacionamentoAtivoId)
-                setPisos(resultado || [])
-            } catch (error) {
-                setErro(error.message)
-            } finally {
-                setCarregandoPisos(false)
-            }
-        }
+    //         try {
+    //             const resultado = await pisoService.listarPorEstacionamento(estacionamentoAtivoId)
+    //             setPisos(resultado || [])
+    //         } catch (error) {
+    //             setErro(error.message)
+    //         } finally {
+    //             setCarregandoPisos(false)
+    //         }
+    //     }
 
-        carregarPisos()
-    }, [estacionamentoAtivoId])
+    //     carregarPisos()
+    // }, [estacionamentoAtivoId])
 
-    function handleChange(campo) {
-        return (e) => {
-            const valor = campo === "is_ocupada" || campo === "em_manutencao"
-                ? e.target.checked
-                : e.target.value
-            setFormulario((atual) => ({ ...atual, [campo]: valor }))
-        }
-    }
+    // function handleChange(campo) {
+    //     return (e) => {
+    //         const valor = campo === "is_ocupada" || campo === "em_manutencao"
+    //             ? e.target.checked
+    //             : e.target.value
+    //         setFormulario((atual) => ({ ...atual, [campo]: valor }))
+    //     }
+    // }
 
-    function handleLimpar() {
-        setFormulario(FORMULARIO_INICIAL)
-        setErro("")
-        setSucesso("")
-    }
+    // function handleLimpar() {
+    //     setFormulario(FORMULARIO_INICIAL)
+    //     setErro("")
+    //     setSucesso("")
+    // }
 
-    function handleNovaVaga() {
-        handleLimpar()
-        setModo("cadastro")
-    }
+    // function handleNovaVaga() {
+    //     handleLimpar()
+    //     setModo("cadastro")
+    // }
 
     function handleEditarVaga(id) {
         navigate(`/admin/vagas/${id}/editar`)
     }
 
-    function handleVoltarParaLista() {
-        setModo("lista")
-        carregarVagas()
-    }
+    // function handleVoltarParaLista() {
+    //     setModo("lista")
+    //     carregarVagas()
+    // }
 
-    async function handleCadastro(e) {
-        e.preventDefault()
-        setErro("")
-        setSucesso("")
+    // async function handleCadastro(e) {
+    //     e.preventDefault()
+    //     setErro("")
+    //     setSucesso("")
 
-        if (!formulario.piso_id) {
-            setErro("Selecione o piso ao qual a vaga pertence.")
-            return
-        }
+    //     if (!formulario.piso_id) {
+    //         setErro("Selecione o piso ao qual a vaga pertence.")
+    //         return
+    //     }
 
-        setSalvando(true)
+    //     setSalvando(true)
 
-        try {
-            const vaga = await vagaService.cadastrarVaga({
-                codigo: formulario.codigo.trim(),
-                nome: formulario.nome.trim(),
-                is_ocupada: formulario.is_ocupada,
-                em_manutencao: formulario.em_manutencao,
-                piso_id: formulario.piso_id,
-            })
+    //     try {
+    //         const vaga = await vagaService.cadastrarVaga({
+    //             codigo: formulario.codigo.trim(),
+    //             nome: formulario.nome.trim(),
+    //             is_ocupada: formulario.is_ocupada,
+    //             em_manutencao: formulario.em_manutencao,
+    //             piso_id: formulario.piso_id,
+    //         })
 
-            setFormulario(FORMULARIO_INICIAL)
-            setSucesso(`Vaga cadastrada com sucesso: ${vaga.nome} (${vaga.codigo}).`)
-            carregarVagas()
-        } catch (error) {
-            setErro(error.message)
-        } finally {
-            setSalvando(false)
-        }
-    }
+    //         setFormulario(FORMULARIO_INICIAL)
+    //         setSucesso(`Vaga cadastrada com sucesso: ${vaga.nome} (${vaga.codigo}).`)
+    //         carregarVagas()
+    //     } catch (error) {
+    //         setErro(error.message)
+    //     } finally {
+    //         setSalvando(false)
+    //     }
+    // }
 
-    if (modo === "cadastro") {
-        return (
-            <section className="screen active" id="screen-vagas">
-                <div className="vaga-card">
+    // if (modo === "cadastro") {
+    //     return (
+    //         <section className="screen active" id="screen-vagas">
+    //             <div className="vaga-card">
 
-                    <div className="vaga-card-head">
-                        <div>
-                            <h3>Cadastrar vaga</h3>
-                            <div className="hint">
-                                Informe os dados da nova vaga e o piso ao qual ela pertence.
-                            </div>
-                        </div>
-                        <button
-                            type="button"
-                            className="vaga-botao-limpar"
-                            onClick={handleVoltarParaLista}
-                        >
-                            Voltar para a lista
-                        </button>
-                    </div>
+    //                 <div className="vaga-card-head">
+    //                     <div>
+    //                         <h3>Cadastrar vaga</h3>
+    //                         <div className="hint">
+    //                             Informe os dados da nova vaga e o piso ao qual ela pertence.
+    //                         </div>
+    //                     </div>
+    //                     <button
+    //                         type="button"
+    //                         className="vaga-botao-limpar"
+    //                         onClick={handleVoltarParaLista}
+    //                     >
+    //                         Voltar para a lista
+    //                     </button>
+    //                 </div>
 
-                    <form className="vaga-form" onSubmit={handleCadastro}>
+    //                 <form className="vaga-form" onSubmit={handleCadastro}>
 
-                        <div className="vaga-linha">
-                            <div className="vaga-campo">
-                                <label htmlFor="codigo">Código</label>
-                                <Input
-                                    id="codigo"
-                                    placeholder="Ex.: V-01"
-                                    value={formulario.codigo}
-                                    onChange={handleChange("codigo")}
-                                    required
-                                />
-                                <span className="ajuda">Precisa ser único entre as vagas.</span>
-                            </div>
+    //                     <div className="vaga-linha">
+    //                         <div className="vaga-campo">
+    //                             <label htmlFor="codigo">Código</label>
+    //                             <Input
+    //                                 id="codigo"
+    //                                 placeholder="Ex.: V-01"
+    //                                 value={formulario.codigo}
+    //                                 onChange={handleChange("codigo")}
+    //                                 required
+    //                             />
+    //                             <span className="ajuda">Precisa ser único entre as vagas.</span>
+    //                         </div>
 
-                            <div className="vaga-campo">
-                                <label htmlFor="nome">Nome</label>
-                                <Input
-                                    id="nome"
-                                    placeholder="Ex.: Vaga 01"
-                                    value={formulario.nome}
-                                    onChange={handleChange("nome")}
-                                    required
-                                />
-                            </div>
-                        </div>
+    //                         <div className="vaga-campo">
+    //                             <label htmlFor="nome">Nome</label>
+    //                             <Input
+    //                                 id="nome"
+    //                                 placeholder="Ex.: Vaga 01"
+    //                                 value={formulario.nome}
+    //                                 onChange={handleChange("nome")}
+    //                                 required
+    //                             />
+    //                         </div>
+    //                     </div>
 
-                        <div className="vaga-campo">
-                            <label htmlFor="piso_id">Piso</label>
-                            <select
-                                id="piso_id"
-                                className="vaga-select"
-                                value={formulario.piso_id}
-                                onChange={handleChange("piso_id")}
-                                disabled={carregandoPisos}
-                                required
-                            >
-                                <option value="">
-                                    {carregandoPisos
-                                        ? "Carregando pisos..."
-                                        : "Selecione um piso"}
-                                </option>
+    //                     <div className="vaga-campo">
+    //                         <label htmlFor="piso_id">Piso</label>
+    //                         <select
+    //                             id="piso_id"
+    //                             className="vaga-select"
+    //                             value={formulario.piso_id}
+    //                             onChange={handleChange("piso_id")}
+    //                             disabled={carregandoPisos}
+    //                             required
+    //                         >
+    //                             <option value="">
+    //                                 {carregandoPisos
+    //                                     ? "Carregando pisos..."
+    //                                     : "Selecione um piso"}
+    //                             </option>
 
-                                {pisos.map((piso) => (
-                                    <option key={piso.id} value={piso.id}>
-                                        {piso.nome} ({piso.codigo})
-                                    </option>
-                                ))}
-                            </select>
+    //                             {pisos.map((piso) => (
+    //                                 <option key={piso.id} value={piso.id}>
+    //                                     {piso.nome} ({piso.codigo})
+    //                                 </option>
+    //                             ))}
+    //                         </select>
 
-                            {!carregandoPisos && pisos.length === 0 && (
-                                <span className="ajuda">
-                                    Nenhum piso cadastrado. Cadastre um piso antes de criar vagas.
-                                </span>
-                            )}
-                        </div>
+    //                         {!carregandoPisos && pisos.length === 0 && (
+    //                             <span className="ajuda">
+    //                                 Nenhum piso cadastrado. Cadastre um piso antes de criar vagas.
+    //                             </span>
+    //                         )}
+    //                     </div>
 
-                        <label className="vaga-checkbox">
-                            <input
-                                type="checkbox"
-                                checked={formulario.is_ocupada}
-                                onChange={handleChange("is_ocupada")}
-                            />
-                            Vaga já está ocupada
-                        </label>
+    //                     <label className="vaga-checkbox">
+    //                         <input
+    //                             type="checkbox"
+    //                             checked={formulario.is_ocupada}
+    //                             onChange={handleChange("is_ocupada")}
+    //                         />
+    //                         Vaga já está ocupada
+    //                     </label>
 
-                        <label className="vaga-checkbox">
-                            <input
-                                type="checkbox"
-                                checked={formulario.em_manutencao}
-                                onChange={handleChange("em_manutencao")}
-                            />
-                            Vaga em manutenção
-                        </label>
+    //                     <label className="vaga-checkbox">
+    //                         <input
+    //                             type="checkbox"
+    //                             checked={formulario.em_manutencao}
+    //                             onChange={handleChange("em_manutencao")}
+    //                         />
+    //                         Vaga em manutenção
+    //                     </label>
 
-                        {erro && <div className="vaga-aviso vaga-aviso--erro">{erro}</div>}
-                        {sucesso && <div className="vaga-aviso vaga-aviso--sucesso">{sucesso}</div>}
+    //                     {erro && <div className="vaga-aviso vaga-aviso--erro">{erro}</div>}
+    //                     {sucesso && <div className="vaga-aviso vaga-aviso--sucesso">{sucesso}</div>}
 
-                        <div className="vaga-acoes">
-                            <button
-                                type="button"
-                                className="vaga-botao-limpar"
-                                onClick={handleLimpar}
-                                disabled={salvando}
-                            >
-                                Limpar
-                            </button>
+    //                     <div className="vaga-acoes">
+    //                         <button
+    //                             type="button"
+    //                             className="vaga-botao-limpar"
+    //                             onClick={handleLimpar}
+    //                             disabled={salvando}
+    //                         >
+    //                             Limpar
+    //                         </button>
 
-                            <Button type="submit" disabled={salvando || carregandoPisos}>
-                                {salvando ? "Cadastrando..." : "Cadastrar vaga"}
-                            </Button>
-                        </div>
+    //                         <Button type="submit" disabled={salvando || carregandoPisos}>
+    //                             {salvando ? "Cadastrando..." : "Cadastrar vaga"}
+    //                         </Button>
+    //                     </div>
 
-                    </form>
-                </div>
-            </section>
-        )
-    }
+    //                 </form>
+    //             </div>
+    //         </section>
+    //     )
+    // }
 
     return (
         <section className="screen active" id="screen-vagas">
@@ -273,9 +273,9 @@ export default function Vagas() {
                             Situação atual de cada vaga do estacionamento.
                         </div>
                     </div>
-                    <Button type="button" onClick={handleNovaVaga}>
+                    {/* <Button type="button" onClick={handleNovaVaga}>
                         + Nova vaga
-                    </Button>
+                    </Button>Cadastrar vaga */}
                 </div>
 
                 {erroLista && <div className="vaga-aviso vaga-aviso--erro">{erroLista}</div>}
