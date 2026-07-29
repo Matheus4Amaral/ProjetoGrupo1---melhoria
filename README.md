@@ -71,3 +71,23 @@ O front-end também possui uma estrutura bem organizada:
 ---
 
 Este projeto visa modernizar e agilizar todo o processo de gestão, desde a entrada de veículos até o acompanhamento em tempo real das vagas e o controle gerencial por turnos.
+
+---
+
+## Melhorias Propostas
+
+* Remoção da opção **Pessoas** do menu de navegação.
+* Exibição do nome do proprietário abaixo das informações da vaga na tela de **Vagas**.
+* Exibição do nome do proprietário ao lado da placa na tela de **Veículos**.
+* Inclusão da logomarca do HubParking nas telas de **Login** e **Cadastro**.
+* Implementação dos temas **claro** e **escuro** em toda a aplicação.
+* Padronização e atualização das telas de **Estacionamento** e **Vagas**, conforme o protótipo do sistema.
+* Adaptação da sidebar e do dashboard para dispositivos móveis.
+* Inclusão de menu hambúrguer para navegação em telas menores.
+* Inclusão da opção de recolher a sidebar, exibindo apenas os ícones.
+* Adição de um favicon personalizado para identificação da aplicação no navegador.
+* Aplicação de máscaras nos campos de **CNPJ**, **CPF** e **telefone**.
+* Inclusão da opção de visualizar ou ocultar a senha.
+* Atualização da lógica de criação e gerenciamento das vagas.
+* Exibição do nome do proprietário do veículo no dashboard.
+
