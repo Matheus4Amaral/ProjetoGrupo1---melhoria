@@ -37,9 +37,34 @@ class VagaRepository {
     return db("vaga").where({ pisoId: pisoId }).select("*");
   }
 
+  // async buscarVagasPorEstacionamentoId(estacionamentoId) {
+  //   return db("vaga")
+  //     .join("piso", "piso.id", "vaga.piso_id")
+  //     .where("piso.estacionamento_id", estacionamentoId)
+  //     .select(
+  //       "vaga.id",
+  //       "vaga.codigo",
+  //       "vaga.nome",
+  //       "vaga.is_ocupada",
+  //       "vaga.em_manutencao",
+  //       "vaga.piso_id",
+  //       "piso.nome as piso_nome",
+  //       "piso.andar as piso_andar",
+  //       "pessoa.nome as motorista_nome",
+  //     )
+  //     .orderBy("piso.andar")
+  //     .orderBy("vaga.codigo", "asc");
+  // }
+
   async buscarVagasPorEstacionamentoId(estacionamentoId) {
     return db("vaga")
       .join("piso", "piso.id", "vaga.piso_id")
+      .leftJoin("veiculo_vaga", function () {
+        this.on("veiculo_vaga.vaga_id", "=", "vaga.id")
+            .andOnNull("veiculo_vaga.desocupado_em");
+      })
+      .leftJoin("veiculo", "veiculo.id", "veiculo_vaga.veiculo_id")
+      .leftJoin("pessoa", "pessoa.id", "veiculo.pessoa_id")
       .where("piso.estacionamento_id", estacionamentoId)
       .select(
         "vaga.id",
@@ -49,10 +74,11 @@ class VagaRepository {
         "vaga.em_manutencao",
         "vaga.piso_id",
         "piso.nome as piso_nome",
-        "piso.andar as piso_andar"
+        "piso.andar as piso_andar",
+        "pessoa.nome as motorista_nome"
       )
       .orderBy("piso.andar")
-      .orderBy("vaga.nome");
+      .orderBy("vaga.codigo", "asc");
   }
 
   async buscarVagasDesocupadas() {

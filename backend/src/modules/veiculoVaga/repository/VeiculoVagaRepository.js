@@ -20,10 +20,12 @@ class VeiculoVagaRepository {
             .join("vaga", "vaga.id", "veiculo_vaga.vaga_id")
             .join("piso", "piso.id", "vaga.piso_id")
             .join("veiculo", "veiculo.id", "veiculo_vaga.veiculo_id")
+            .leftJoin("pessoa", "pessoa.id", "veiculo.pessoa_id")
             .where("piso.estacionamento_id", estacionamentoId)
             .select(
                 "veiculo_vaga.id",
                 "veiculo.placa",
+                "pessoa.nome as motorista_nome",
                 "vaga.nome as vaga_nome",
                 "vaga.codigo as vaga_codigo",
                 "piso.nome as piso_nome",
@@ -31,7 +33,7 @@ class VeiculoVagaRepository {
                 "veiculo_vaga.desocupado_em"
             )
             .orderBy("veiculo_vaga.estacionado_em", "desc")
-            .limit(limite)
+            .limit(limite);
     }
 
     async buscarPorId(id) {

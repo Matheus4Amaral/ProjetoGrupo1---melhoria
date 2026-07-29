@@ -220,7 +220,34 @@
     font-size: 12px;
 }
 
+.auth-input-senha {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.auth-input-senha input {
+    width: 100%;
+    padding-right: 42px;
+}
+
+.auth-btn-olho {
+    position: absolute;
+    right: 12px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 18px;
+    color: #666;
+}
+
+.auth-btn-olho:hover {
+    color: #000;
+}
+
+
 @media (max-width: 640px) {
+
     .auth-brand,
     .auth-form {
         padding: 36px 28px;
@@ -229,4 +256,5 @@
     .auth-linha {
         grid-template-columns: 1fr;
     }
+
 }

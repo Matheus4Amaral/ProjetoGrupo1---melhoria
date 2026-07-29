@@ -12,10 +12,10 @@ const FORMULARIO_INICIAL = {
     modelo: "",
     ano: "",
     cor: "",
-    combustivel: "",
+    // combustivel: "",
 }
 
-const COMBUSTIVEIS = ["Gasolina", "Etanol", "Flex", "Diesel", "GNV", "Elétrico", "Híbrido"]
+// const COMBUSTIVEIS = ["Gasolina", "Etanol", "Flex", "Diesel", "GNV", "Elétrico", "Híbrido"]
 
 export default function MeusVeiculos() {
     const { usuario } = useAuth()
@@ -63,7 +63,7 @@ export default function MeusVeiculos() {
             modelo: veiculo.modelo || "",
             ano: veiculo.ano || "",
             cor: veiculo.cor || "",
-            combustivel: veiculo.combustivel || "",
+            // combustivel: veiculo.combustivel || "",
         })
         setErroForm("")
         setSucesso("")
@@ -95,7 +95,7 @@ export default function MeusVeiculos() {
             modelo: formulario.modelo.trim() || null,
             ano: formulario.ano.trim() || null,
             cor: formulario.cor.trim() || null,
-            combustivel: formulario.combustivel || null,
+            // combustivel: formulario.combustivel || null,
         }
 
         setSalvando(true)
@@ -219,20 +219,7 @@ export default function MeusVeiculos() {
                         />
                     </div>
 
-                    <div className="veiculos-campo">
-                        <label htmlFor="combustivel">Combustível</label>
-                        <select
-                            id="combustivel"
-                            className="veiculos-input"
-                            value={formulario.combustivel}
-                            onChange={handleChange("combustivel")}
-                        >
-                            <option value="">Selecione...</option>
-                            {COMBUSTIVEIS.map((opcao) => (
-                                <option key={opcao} value={opcao}>{opcao}</option>
-                            ))}
-                        </select>
-                    </div>
+                  
                 </div>
 
                 {erroForm && <div className="veiculos-aviso veiculos-aviso--erro">{erroForm}</div>}

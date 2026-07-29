@@ -62,11 +62,28 @@ export default function Estacionamento() {
 
     function handleChange(campo) {
         return (e) => {
-            const valor = campo === "ativo" ? e.target.checked : e.target.value
-            setFormulario((atual) => ({ ...atual, [campo]: valor }))
-        }
-    }
+            let valor;
 
+            if (campo === "ativo") {
+                valor = e.target.checked;
+            } else {
+                valor = e.target.value;
+            }
+
+            if (campo === "cnpj") {
+                valor = formatarCNPJ(valor);
+            }
+
+            if (campo === "telefone") {
+                valor = formatarTelefone(valor);
+            }
+
+            setFormulario((atual) => ({
+                ...atual,
+                [campo]: valor,
+            }));
+        };
+    }
     function handleLimpar() {
         setFormulario(FORMULARIO_INICIAL)
         setCidade(null)
@@ -87,6 +104,24 @@ export default function Estacionamento() {
     function handleVoltarParaLista() {
         setModo("lista")
         carregarEstacionamentos()
+    }
+
+    function formatarCNPJ(valor) {
+        return valor
+            .replace(/\D/g, "")
+            .slice(0, 14)
+            .replace(/^(\d{2})(\d)/, "$1.$2")
+            .replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3")
+            .replace(/\.(\d{3})(\d)/, ".$1/$2")
+            .replace(/(\d{4})(\d)/, "$1-$2");
+    }
+
+    function formatarTelefone(valor) {
+        return valor
+            .replace(/\D/g, "")
+            .slice(0, 11)
+            .replace(/^(\d{2})(\d)/, "($1) $2")
+            .replace(/(\d{5})(\d)/, "$1-$2");
     }
 
     async function handleCadastro(e) {
@@ -195,13 +230,17 @@ export default function Estacionamento() {
                                 <label htmlFor="cnpj">CNPJ</label>
                                 <Input
                                     id="cnpj"
-                                    placeholder="Somente números"
+                                    type="text"
+                                    placeholder="00.000.000/0000-00"
                                     value={formulario.cnpj}
                                     onChange={handleChange("cnpj")}
                                     maxLength={18}
+                                    inputMode="numeric"
                                     required
                                 />
-                                <span className="ajuda">Precisa ser único entre os estacionamentos.</span>
+                                <span className="ajuda">
+                                    Precisa ser único entre os estacionamentos.
+                                </span>
                             </div>
                         </div>
 
@@ -292,15 +331,15 @@ export default function Estacionamento() {
                                 />
                             </div>
 
-                            <div className="estac-campo">
-                                <label htmlFor="telefone">Telefone</label>
-                                <Input
-                                    id="telefone"
-                                    placeholder="Opcional"
-                                    value={formulario.telefone}
-                                    onChange={handleChange("telefone")}
-                                />
-                            </div>
+                            <Input
+                                id="telefone"
+                                type="text"
+                                placeholder="(00) 00000-0000"
+                                value={formulario.telefone}
+                                onChange={handleChange("telefone")}
+                                maxLength={15}
+                                inputMode="numeric"
+                            />
                         </div>
 
                         <label className="estac-checkbox">
@@ -396,7 +435,7 @@ export default function Estacionamento() {
                                                     title="Editar estacionamento"
                                                     aria-label={`Editar estacionamento ${estacionamento.nome}`}
                                                 >
-                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5Z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5Z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
                                                 </button>
                                             </td>
                                         </tr>
@@ -417,7 +456,7 @@ export default function Estacionamento() {
                                             title="Editar estacionamento"
                                             aria-label={`Editar estacionamento ${estacionamento.nome}`}
                                         >
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5Z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5Z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
                                         </button>
                                     </div>
                                     <div className="estac-item-mobile-detalhe">

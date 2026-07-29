@@ -49,6 +49,8 @@ export default function Dashboard() {
         reservaService.listarMovimentacoesPorEstacionamento(estacionamentoAtivoId),
       ]);
 
+      console.log(dadosMovimentacoes);
+
       setVagas(dadosVagas || []);
       setMovimentacoes(dadosMovimentacoes || []);
     } catch (error) {
@@ -158,10 +160,11 @@ export default function Dashboard() {
                 </div>
               </div>
               <table>
-                <thead><tr><th>Placa</th><th>Vaga</th><th>Movimento</th><th>Horário</th><th>Status</th></tr></thead>
+                <thead><tr><th>Motorista</th><th>Placa</th><th>Vaga</th><th>Movimento</th><th>Horário</th><th>Status</th></tr></thead>
                 <tbody id="dash-activity-body">
                   {!carregando && movimentacoes.map((m) => (
                     <tr key={m.id}>
+                      <td className="dash-mono">{m.motorista_nome || '—'}</td>
                       <td className="dash-mono">{m.placa}</td>
                       <td>{m.vaga_nome} · {m.piso_nome}</td>
                       <td>{m.desocupado_em ? 'Saída' : 'Entrada'}</td>

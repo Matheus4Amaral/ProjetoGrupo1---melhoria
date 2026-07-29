@@ -12,6 +12,8 @@ import CidadeSelect from "../../components/CidadeSelect"
 import Logo from "../../assets/logo.png"
 import autenticacaoService from "../../services/autenticacaoService"
 
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 const FORMULARIO_INICIAL = {
     tipo: "motorista",
     nome: "",
@@ -33,9 +35,12 @@ export default function Cadastro() {
     const [erro, setErro] = useState("")
     const [carregando, setCarregando] = useState(false)
 
-    function handleChange(campo) {
-        return (e) => setFormulario((atual) => ({ ...atual, [campo]: e.target.value }))
-    }
+    const [mostrarSenha, setMostrarSenha] = useState(false);
+    const [mostrarConfirmarSenha, setMostrarConfirmarSenha] = useState(false);
+
+    // function handleChange(campo) {
+    //     return (e) => setFormulario((atual) => ({ ...atual, [campo]: e.target.value }))
+    // }
 
     function selecionarTipo(tipo) {
         setFormulario((atual) => ({ ...atual, tipo }))
@@ -45,39 +50,85 @@ export default function Cadastro() {
         setFormulario((atual) => ({ ...atual, cidade_id: cidade?.id || "" }))
     }
 
+
+    function formatarCPF(valor) {
+        return valor
+            .replace(/\D/g, "")
+            .slice(0, 11)
+            .replace(/(\d{3})(\d)/, "$1.$2")
+            .replace(/(\d{3})(\d)/, "$1.$2")
+            .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+    }
+
+    function handleChange(campo) {
+        return (e) => {
+            let valor = e.target.value;
+
+            if (campo === "cpf") {
+                valor = formatarCPF(valor);
+            }
+
+            setFormulario((atual) => ({
+                ...atual,
+                [campo]: valor,
+            }));
+        };
+    }
+
     async function handleCadastro(e) {
-        e.preventDefault()
-        setErro("")
+        e.preventDefault();
+        setErro("");
+
+        const cpfLimpo = formulario.cpf.replace(/\D/g, "");
+
+        if (cpfLimpo.length !== 11) {
+            setErro("Informe um CPF válido.");
+            return;
+        }
 
         if (formulario.senha !== formulario.confirmarSenha) {
-            setErro("As senhas não coincidem.")
-            return
+            setErro("As senhas não coincidem.");
+            return;
         }
 
         if (!formulario.cidade_id) {
-            setErro("Selecione uma cidade na lista de sugestões.")
-            return
+            setErro("Selecione uma cidade na lista de sugestões.");
+            return;
         }
 
-        setCarregando(true)
+        setCarregando(true);
 
         try {
             const {
-                tipo, nome, email, cpf, senha,
-                logradouro, bairro, numero, complemento, cidade_id,
-            } = formulario
+                tipo,
+                nome,
+                email,
+                senha,
+                logradouro,
+                bairro,
+                numero,
+                complemento,
+                cidade_id,
+            } = formulario;
 
             await autenticacaoService.cadastrar({
-                tipo, nome, email, cpf, senha,
-                logradouro, bairro, complemento, cidade_id,
+                tipo,
+                nome,
+                email,
+                cpf: cpfLimpo,
+                senha,
+                logradouro,
+                bairro,
+                complemento,
+                cidade_id,
                 numero: Number(numero),
-            })
+            });
 
-            navigate("/login", { state: { cadastroConcluido: true } })
+            navigate("/login", { state: { cadastroConcluido: true } });
         } catch (error) {
-            setErro(error.message)
+            setErro(error.message);
         } finally {
-            setCarregando(false)
+            setCarregando(false);
         }
     }
 
@@ -173,39 +224,65 @@ export default function Cadastro() {
                         <div className="auth-campo">
                             <label htmlFor="cpf">CPF</label>
                             <Input
-                                type="number"
                                 id="cpf"
-                                placeholder="Somente números"
+                                type="text"
+                                placeholder="000.000.000-00"
                                 value={formulario.cpf}
                                 onChange={handleChange("cpf")}
+                                maxLength={14}
                                 required
                             />
                         </div>
+
                     </div>
 
                     <div className="auth-linha">
-                        <div className="auth-campo">
+                        <div className="auth-campo auth-campo-senha">
                             <label htmlFor="senha">Senha</label>
-                            <Input
-                                id="senha"
-                                type="password"
-                                placeholder="••••••••"
-                                value={formulario.senha}
-                                onChange={handleChange("senha")}
-                                required
-                            />
+
+                            <div className="auth-input-senha">
+                                <Input
+                                    id="senha"
+                                    type={mostrarSenha ? "text" : "password"}
+                                    placeholder="••••••••"
+                                    value={formulario.senha}
+                                    onChange={handleChange("senha")}
+                                    required
+                                />
+
+                                <button
+                                    type="button"
+                                    className="auth-btn-olho"
+                                    onClick={() => setMostrarSenha(!mostrarSenha)}
+                                >
+                                    {mostrarSenha ? <FaEyeSlash /> : <FaEye />}
+                                </button>
+                            </div>
                         </div>
 
-                        <div className="auth-campo">
+                        <div className="auth-campo auth-campo-senha">
                             <label htmlFor="confirmarSenha">Confirmar senha</label>
-                            <Input
-                                id="confirmarSenha"
-                                type="password"
-                                placeholder="••••••••"
-                                value={formulario.confirmarSenha}
-                                onChange={handleChange("confirmarSenha")}
-                                required
-                            />
+
+                            <div className="auth-input-senha">
+                                <Input
+                                    id="confirmarSenha"
+                                    type={mostrarConfirmarSenha ? "text" : "password"}
+                                    placeholder="••••••••"
+                                    value={formulario.confirmarSenha}
+                                    onChange={handleChange("confirmarSenha")}
+                                    required
+                                />
+
+                                <button
+                                    type="button"
+                                    className="auth-btn-olho"
+                                    onClick={() =>
+                                        setMostrarConfirmarSenha(!mostrarConfirmarSenha)
+                                    }
+                                >
+                                    {mostrarConfirmarSenha ? <FaEyeSlash /> : <FaEye />}
+                                </button>
+                            </div>
                         </div>
                     </div>
 
