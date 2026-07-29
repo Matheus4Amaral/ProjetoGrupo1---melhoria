@@ -83,7 +83,8 @@ class PisoService {
                     return new Date(b.criado_em) - new Date(a.criado_em);
                 });
 
-                const qtdRemover = numAntigo - numNovo;
+                // Só sobra vaga para remover se o piso realmente tiver mais vagas do que a nova capacidade.
+                const qtdRemover = Math.max(vagasDoPiso.length - numNovo, 0);
                 const vagasParaRemover = vagasDoPiso.slice(0, qtdRemover);
 
                 const vagasOcupadas = vagasParaRemover.filter(v => v.is_ocupada);

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 import './styles.css'
@@ -88,6 +88,19 @@ export default function Vagas() {
         carregarPisos()
     }, [estacionamentoAtivoId])
 
+    // Quantas vagas já existem em cada piso, para não passar da capacidade informada no piso.
+    const vagasPorPiso = useMemo(() => {
+        return vagas.reduce((contagem, vaga) => {
+            contagem[vaga.piso_id] = (contagem[vaga.piso_id] || 0) + 1
+            return contagem
+        }, {})
+    }, [vagas])
+
+    const pisoSelecionado = pisos.find((piso) => piso.id === formulario.piso_id)
+    const vagasRestantes = pisoSelecionado
+        ? pisoSelecionado.vagas - (vagasPorPiso[pisoSelecionado.id] || 0)
+        : null
+
     function handleChange(campo) {
         return (e) => {
             const valor = campo === "is_ocupada" || campo === "em_manutencao"
@@ -124,6 +137,14 @@ export default function Vagas() {
 
         if (!formulario.piso_id) {
             setErro("Selecione o piso ao qual a vaga pertence.")
+            return
+        }
+
+        if (vagasRestantes !== null && vagasRestantes <= 0) {
+            setErro(
+                `O piso ${pisoSelecionado.nome} suporta ${pisoSelecionado.vagas} vaga(s) e já está lotado. ` +
+                `Aumente a quantidade de vagas do piso para cadastrar mais.`
+            )
             return
         }
 
@@ -227,16 +248,30 @@ export default function Vagas() {
                                         : "Selecione um piso"}
                                 </option>
 
-                                {pisos.map((piso) => (
-                                    <option key={piso.id} value={piso.id}>
-                                        {piso.nome} ({piso.codigo})
-                                    </option>
-                                ))}
+                                {pisos.map((piso) => {
+                                    const cadastradas = vagasPorPiso[piso.id] || 0
+                                    const lotado = cadastradas >= piso.vagas
+
+                                    return (
+                                        <option key={piso.id} value={piso.id} disabled={lotado}>
+                                            {piso.nome} ({piso.codigo}) — {cadastradas}/{piso.vagas} vagas
+                                            {lotado ? " — lotado" : ""}
+                                        </option>
+                                    )
+                                })}
                             </select>
 
                             {!carregandoPisos && pisos.length === 0 && (
                                 <span className="ajuda">
                                     Nenhum piso cadastrado. Cadastre um piso antes de criar vagas.
+                                </span>
+                            )}
+
+                            {pisoSelecionado && (
+                                <span className="ajuda">
+                                    {vagasRestantes > 0
+                                        ? `Restam ${vagasRestantes} vaga(s) para cadastrar nesse piso.`
+                                        : "Esse piso já atingiu a quantidade de vagas que suporta. Aumente a quantidade na edição do piso para cadastrar mais."}
                                 </span>
                             )}
                         </div>
@@ -272,7 +307,10 @@ export default function Vagas() {
                                 Limpar
                             </button>
 
-                            <Button type="submit" disabled={salvando || carregandoPisos}>
+                            <Button
+                                type="submit"
+                                disabled={salvando || carregandoPisos || (vagasRestantes !== null && vagasRestantes <= 0)}
+                            >
                                 {salvando ? "Cadastrando..." : "Cadastrar vaga"}
                             </Button>
                         </div>

@@ -3,7 +3,27 @@ const PisoRepository = require('../../piso/repository/PisoRepository')
 const EstacionamentoRepository = require('../../estacionamento/repository/EstacionamentoRepository')
 
 class VagaService {
+    // Um piso não pode ter mais vagas cadastradas do que a quantidade informada no cadastro dele.
+    async validarCapacidadeDoPiso(piso){
+        const vagasCadastradas = await VagaRepository.contarVagasPorPisoId(piso.id)
+
+        if (vagasCadastradas >= piso.vagas) {
+            throw new Error(
+                `O piso ${piso.nome} suporta ${piso.vagas} vaga(s) e já possui ${vagasCadastradas} cadastrada(s). ` +
+                `Aumente a quantidade de vagas do piso para cadastrar mais.`
+            )
+        }
+    }
+
     async cadastrarVaga(dados){
+        const pisoExistente = await PisoRepository.buscarPisoPorId(dados.piso_id)
+
+        if(!pisoExistente) {
+            throw new Error("Ops! Parece que esse piso não existe")
+        }
+
+        await this.validarCapacidadeDoPiso(pisoExistente)
+
         return await VagaRepository.cadastrarVaga(dados)
     }
 
@@ -65,6 +85,11 @@ class VagaService {
 
             if(!pisoExistente) {
                 throw new Error("Ops! Parece que esse piso não existe")
+            }
+
+            // Mudar a vaga de piso ocupa uma posição no piso de destino.
+            if(dados.piso_id !== vagaExistente.piso_id) {
+                await this.validarCapacidadeDoPiso(pisoExistente)
             }
         }
 

@@ -37,6 +37,14 @@ class VagaRepository {
     return db("vaga").where({ piso_id: pisoId }).select("*");
   }
 
+  async contarVagasPorPisoId(pisoId) {
+    const [{ total }] = await db("vaga")
+      .where({ piso_id: pisoId })
+      .count({ total: "*" });
+
+    return Number(total);
+  }
+
   async buscarVagasPorEstacionamentoId(estacionamentoId) {
     return db("vaga")
       .join("piso", "piso.id", "vaga.piso_id")
