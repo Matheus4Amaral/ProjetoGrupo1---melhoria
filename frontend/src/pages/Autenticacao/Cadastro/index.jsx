@@ -11,6 +11,7 @@ import CidadeSelect from '@/components/CidadeSelect'
 
 import Logo from '@/assets/logo.png'
 import autenticacaoService from '@/services/autenticacaoService'
+import { useAuth } from '@/context/AuthContext'
 
 const FORMULARIO_INICIAL = {
     tipo: "motorista",
@@ -28,6 +29,8 @@ const FORMULARIO_INICIAL = {
 
 export default function Cadastro() {
     const navigate = useNavigate()
+    //Login auth context
+    const { login } = useAuth()
 
     const [formulario, setFormulario] = useState(FORMULARIO_INICIAL)
     const [erro, setErro] = useState("")
@@ -72,8 +75,17 @@ export default function Cadastro() {
                 logradouro, bairro, complemento, cidade_id,
                 numero: Number(numero),
             })
+//Login automatico após cadastro
+            await login({
+            email,
+            senha,
+            })
 
-            navigate("/login", { state: { cadastroConcluido: true } })
+            if (tipo === "gerente") {
+            navigate("/admin")
+            } else {
+             navigate("/motorista")
+            }
         } catch (error) {
             setErro(error.message)
         } finally {
