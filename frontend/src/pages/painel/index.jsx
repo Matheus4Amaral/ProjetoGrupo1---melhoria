@@ -102,7 +102,8 @@ export default function Painel() {
     }
 
     const handleProximaVaga = () => {
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
+        document.getElementById('busca-estacionamento')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        document.getElementById('busca-estacionamento')?.focus()
     }
 
     return (
