@@ -20,8 +20,6 @@
   display: flex; align-items: center; justify-content: center; background: var(--sky-100); color: var(--sky-500);
 }
 
-.btn-secondary { background: var(--white); color: var(--ink-900); border: 1.5px solid #E1E7EA; border-radius: var(--radius-sm); font-weight: 600; font-size: 14px; padding: 11px 18px; cursor: pointer; }
-.btn-secondary:hover { border-color: var(--sky-400); color: var(--sky-500); }
 .btn-sm { padding: 7px 12px; font-size: 12.5px; border-radius: 7px; }
 
 table { width: 100%; border-collapse: collapse; font-size: 13px; }
