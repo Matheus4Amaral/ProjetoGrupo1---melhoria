@@ -136,13 +136,35 @@ export default function EstacionamentoVagas() {
         setCarregandoAcao(true)
         setErroAcao("")
 
-        try {
-            await reservaService.estacionarVeiculo(veiculoParaEstacionar, vagaSelecionada.id)
-            setSucessoAcao(`Estacionado na vaga ${vagaSelecionada.nome}!`)
-            setVagaSelecionada(null)
-            setVeiculoParaEstacionar("")
-            navigate('/motorista')
-        } catch (error) {
+    
+       try {
+    const veiculoSelecionado = meusVeiculos.find(
+        (veiculo) =>
+            String(veiculo.id) === String(veiculoParaEstacionar)
+    )
+
+    await reservaService.estacionarVeiculo(
+        veiculoParaEstacionar,
+        vagaSelecionada.id
+    )
+
+//Vaga atualizada para ocupada 
+    navigate("/motorista", {
+        state: {
+            estacionamentoConfirmado: {
+                estacionamento: estacionamento.nome,
+                endereco: `${estacionamento.logradouro}, ${estacionamento.numero}`,
+                piso: vagaSelecionada.piso_nome,
+                andar: vagaSelecionada.piso_andar,
+                vaga: vagaSelecionada.nome,
+                veiculo: veiculoSelecionado
+                    ? `${veiculoSelecionado.marca} ${veiculoSelecionado.modelo}`
+                    : "Veículo",
+                placa: veiculoSelecionado?.placa || "",
+            },
+        },
+    })
+} catch (error) {
             setErroAcao(error.message)
         } finally {
             setCarregandoAcao(false)
