@@ -9,8 +9,8 @@ import Input from "../../components/Input"
 import Text from "../../components/Text"
 import CidadeSelect from "../../components/CidadeSelect"
 
-import Logo from "../../assets/logo.png"
 import autenticacaoService from "../../services/autenticacaoService"
+import AuthLogo from "./AuthLogo"
 
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
@@ -137,10 +137,7 @@ export default function Cadastro() {
             <div className="auth-card auth-card--largo">
 
                 <div className="auth-brand">
-                    <div className="auth-brand-logo">
-                        <img src={Logo} alt="HubParking" />
-                        <span>HubParking</span>
-                    </div>
+                    <AuthLogo />
 
                     <div className="auth-brand-bars">
                         <span />

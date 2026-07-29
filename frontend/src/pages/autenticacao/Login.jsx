@@ -8,8 +8,8 @@ import Button from "../../components/Button"
 import Input from "../../components/Input"
 import Text from "../../components/Text"
 
-import Logo from "../../assets/logo.png"
 import { useAuth } from "../../context/AuthContext"
+import AuthLogo from "./AuthLogo"
 
 export default function Login() {
     const navigate = useNavigate()
@@ -53,10 +53,7 @@ export default function Login() {
             <div className="auth-card">
 
                 <div className="auth-brand">
-                    <div className="auth-brand-logo">
-                        <img src={Logo} alt="HubParking" />
-                        <span>HubParking</span>
-                    </div>
+                    <AuthLogo />
 
                     <div className="auth-brand-bars">
                         <span />

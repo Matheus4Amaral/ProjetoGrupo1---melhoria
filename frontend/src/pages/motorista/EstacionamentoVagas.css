@@ -5,7 +5,7 @@
   gap: 6px;
   font-size: 13px;
   font-weight: 600;
-  color: var(--ink-700);
+  color: var(--color-text-secondary);
   text-decoration: none;
   margin-bottom: 16px;
 }
@@ -16,27 +16,27 @@
   align-items: center;
   justify-content: space-between;
   gap: 18px;
-  background: var(--white);
-  border: 1px solid #EAEDEF;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-1);
   padding: 20px 22px;
   margin-bottom: 16px;
 }
-.detalhe-cabecalho h1 { font-family: var(--font-display); font-size: 20px; color: var(--ink-900); }
-.detalhe-cabecalho p { font-size: 12.5px; color: #84959c; margin-top: 5px; line-height: 1.5; }
+.detalhe-cabecalho h1 { font-family: var(--font-display); font-size: 20px; color: var(--color-text-primary); }
+.detalhe-cabecalho p { font-size: 12.5px; color: var(--color-text-muted); margin-top: 5px; line-height: 1.5; }
 
 .detalhe-resumo {
   flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 10px;
-  background: #E8F7F0;
-  color: #1F7A57;
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
   border-radius: var(--radius-md);
   padding: 12px 16px;
 }
-.detalhe-resumo--lotado { background: #FDECEC; color: #A32B2B; }
+.detalhe-resumo--lotado { background: var(--color-danger-bg); color: var(--color-danger-text); }
 .detalhe-resumo-numero { font-family: var(--font-display); font-size: 30px; font-weight: 700; line-height: 1; }
 .detalhe-resumo-texto { font-size: 11.5px; font-weight: 600; line-height: 1.35; }
 
@@ -45,24 +45,24 @@
   gap: 16px;
   flex-wrap: wrap;
   font-size: 12px;
-  color: #84959c;
+  color: var(--color-text-muted);
   margin-bottom: 18px;
   padding: 0 2px;
 }
 .detalhe-legenda span { display: inline-flex; align-items: center; gap: 6px; }
 .detalhe-ponto { width: 9px; height: 9px; border-radius: 3px; display: inline-block; }
-.detalhe-ponto--livre { background: #35A97B; }
-.detalhe-ponto--ocupada { background: #D9534F; }
-.detalhe-ponto--manutencao { background: #E8A33D; }
+.detalhe-ponto--livre { background: var(--color-success-text); }
+.detalhe-ponto--ocupada { background: var(--color-danger-text); }
+.detalhe-ponto--manutencao { background: var(--color-warning-text); }
 
 .detalhe-estado {
-  background: var(--white);
-  border: 1px solid #EAEDEF;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: 40px 16px;
   text-align: center;
   font-size: 13.5px;
-  color: #84959c;
+  color: var(--color-text-muted);
 }
 
 .detalhe-aviso {
@@ -71,12 +71,12 @@
   font-size: 13px;
   margin-bottom: 16px;
 }
-.detalhe-aviso--erro { background: #FDECEC; color: #A32B2B; border: 1px solid #F5C9C9; }
+.detalhe-aviso--erro { background: var(--color-danger-bg); color: var(--color-danger-text); border: 1px solid var(--color-danger-border); }
 
 /* pisos */
 .detalhe-piso {
-  background: var(--white);
-  border: 1px solid #EAEDEF;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-1);
   padding: 18px 20px;
@@ -90,16 +90,16 @@
   flex-wrap: wrap;
   margin-bottom: 14px;
 }
-.detalhe-piso-cabecalho h2 { font-family: var(--font-display); font-size: 15px; color: var(--ink-900); }
+.detalhe-piso-cabecalho h2 { font-family: var(--font-display); font-size: 15px; color: var(--color-text-primary); }
 .detalhe-piso-andar {
   font-size: 11px;
   font-weight: 600;
-  color: #5b7280;
-  background: var(--neutral-50);
+  color: var(--color-text-secondary);
+  background: var(--color-surface-muted);
   border-radius: 999px;
   padding: 3px 9px;
 }
-.detalhe-piso-contagem { margin-left: auto; font-size: 12px; color: #84959c; }
+.detalhe-piso-contagem { margin-left: auto; font-size: 12px; color: var(--color-text-muted); }
 
 /* grade de vagas */
 .detalhe-vagas {
@@ -124,9 +124,9 @@
 .detalhe-vaga-codigo { font-family: var(--font-mono); font-size: 11px; opacity: .75; }
 .detalhe-vaga-situacao { font-size: 11px; font-weight: 600; margin-top: 4px; }
 
-.detalhe-vaga--livre { background: #E8F7F0; border-color: #C3E9D8; color: #1F7A57; }
-.detalhe-vaga--ocupada { background: #FDECEC; border-color: #F5C9C9; color: #A32B2B; }
-.detalhe-vaga--manutencao { background: #FFF3E0; border-color: #F5DFB8; color: #B5690A; }
+.detalhe-vaga--livre { background: var(--color-success-bg); border-color: var(--color-success-border); color: var(--color-success-text); }
+.detalhe-vaga--ocupada { background: var(--color-danger-bg); border-color: var(--color-danger-border); color: var(--color-danger-text); }
+.detalhe-vaga--manutencao { background: var(--color-warning-bg); border-color: var(--color-warning-border); color: var(--color-warning-text); }
 
 @media (max-width: 720px) {
   .detalhe-cabecalho { flex-direction: column; align-items: flex-start; }
@@ -136,9 +136,9 @@
 
 /* ação de estacionar/sair */
 .detalhe-aviso--sucesso {
-  background: #E8F7F0;
-  color: #1F7A57;
-  border: 1px solid #C3E9D8;
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+  border: 1px solid var(--color-success-border);
 }
 
 .detalhe-ocupacao-ativa {
@@ -147,9 +147,9 @@
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
-  background: #FFF3E0;
-  border: 1px solid #F5DFB8;
-  color: #B5690A;
+  background: var(--color-warning-bg);
+  border: 1px solid var(--color-warning-border);
+  color: var(--color-warning-text);
   border-radius: var(--radius-md);
   padding: 14px 16px;
   font-size: 13px;
@@ -163,8 +163,8 @@
   padding: 9px 16px;
   font-size: 13px;
   font-weight: 600;
-  color: var(--white);
-  background: #B5690A;
+  color: var(--color-warning-button-text);
+  background: var(--color-warning-button-bg);
   cursor: pointer;
 }
 .detalhe-botao-sair:disabled { opacity: .6; cursor: not-allowed; }
@@ -174,23 +174,23 @@
   align-items: center;
   gap: 14px;
   flex-wrap: wrap;
-  background: var(--white);
-  border: 1px solid #EAEDEF;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-1);
   padding: 16px 18px;
   margin-bottom: 16px;
   font-size: 13.5px;
-  color: var(--ink-900);
+  color: var(--color-text-primary);
 }
 
 .detalhe-confirmar-select {
   padding: 8px 10px;
   border-radius: var(--radius-sm);
-  border: 1px solid #D7DBE0;
+  border: 1px solid var(--color-border-strong);
   font-size: 13px;
-  color: var(--ink-900);
-  background: var(--white);
+  color: var(--color-text-primary);
+  background: var(--color-surface);
 }
 
 .detalhe-confirmar-acoes {
@@ -205,20 +205,20 @@
   padding: 9px 16px;
   font-size: 13px;
   font-weight: 600;
-  color: var(--white);
+  color: var(--color-text-on-brand);
   background: var(--sky-500);
   cursor: pointer;
 }
 .detalhe-botao-confirmar:disabled { opacity: .6; cursor: not-allowed; }
 
 .detalhe-botao-cancelar {
-  border: 1px solid #D7DBE0;
+  border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-sm);
   padding: 9px 16px;
   font-size: 13px;
   font-weight: 600;
-  color: var(--ink-700);
-  background: var(--white);
+  color: var(--color-text-secondary);
+  background: var(--color-surface);
   cursor: pointer;
 }
 
@@ -233,7 +233,7 @@
   transition: transform .1s ease, border-color .1s ease;
 }
 .detalhe-vaga--clicavel:hover {
-  border-color: #1F7A57;
+  border-color: var(--color-success-text);
   transform: translateY(-1px);
 }
 .detalhe-vaga:disabled {

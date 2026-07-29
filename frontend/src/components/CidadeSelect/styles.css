@@ -12,8 +12,8 @@
     max-height: 220px;
     overflow-y: auto;
 
-    background: white;
-    border: 1px solid #B5F1F5;
+    background: var(--color-surface);
+    border: 1px solid var(--sky-100);
     border-radius: 8px;
     box-shadow: 0 12px 24px rgba(30, 90, 130, .18);
 
@@ -37,22 +37,22 @@
     padding: 8px 10px;
 
     font-size: 14px;
-    color: #1f2a37;
+    color: var(--color-text-primary);
 
     cursor: pointer;
 }
 
 .cidade-select-lista button:hover {
-    background: #F3F3F3;
+    background: var(--color-surface-muted);
 }
 
 .cidade-select-lista button span {
-    color: #7a8794;
+    color: var(--color-text-muted);
     font-size: 12px;
 }
 
 .cidade-select-info {
     padding: 8px 10px;
     font-size: 13px;
-    color: #7a8794;
+    color: var(--color-text-muted);
 }

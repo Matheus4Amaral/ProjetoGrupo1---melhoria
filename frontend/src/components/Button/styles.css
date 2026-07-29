@@ -2,8 +2,8 @@
     width: 100%;
     padding: 14px;
 
-    background: #3ACFF5;
-    color: white;
+    background: var(--sky-300);
+    color: var(--color-text-on-brand);
 
     border: none;
     border-radius: 8px;
@@ -17,5 +17,9 @@
 }
 
 .button:hover {
-    background: #4EB2EF;
+    background: var(--sky-500);
+}
+
+.button:disabled {
+    color: var(--color-text-on-disabled-accent);
 }

@@ -1,4 +1,4 @@
 .text {
-    color: #3EC1F4;
+    color: var(--sky-400);
     margin: 0;
 }

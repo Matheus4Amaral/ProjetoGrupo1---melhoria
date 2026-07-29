@@ -1,8 +1,8 @@
 .kpi-card {
-  background: #17313E;
+  background: var(--color-navigation);
   border-radius: 12px;
   padding: 16px;
-  color: white;
+  color: var(--color-text-on-accent);
 }
 .kpi-card .label { font-size: 13px; opacity: 0.7; }
 .kpi-card .value { font-size: 28px; font-weight: bold; }

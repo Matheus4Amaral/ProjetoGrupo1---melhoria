@@ -1,6 +1,6 @@
 .container {
     min-height: 100vh;
-    background: #F3F3F3;
+    background: var(--color-page-bg);
 
     display: flex;
     justify-content: center;

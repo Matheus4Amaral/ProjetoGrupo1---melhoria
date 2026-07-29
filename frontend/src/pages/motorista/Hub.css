@@ -4,22 +4,22 @@
   font-family: var(--font-display);
   font-size: 24px;
   line-height: 1.25;
-  color: var(--ink-900);
+  color: var(--color-text-primary);
 }
-.hub-saudacao p { font-size: 13.5px; color: #84959c; margin-top: 6px; }
+.hub-saudacao p { font-size: 13.5px; color: var(--color-text-muted); margin-top: 6px; }
 
 /* busca */
 .hub-busca {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: var(--white);
-  border: 1px solid #E7EBEC;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 999px;
   padding: 12px 18px;
   box-shadow: var(--shadow-1);
   margin-bottom: 22px;
-  color: #84959c;
+  color: var(--color-text-muted);
 }
 .hub-busca:focus-within { border-color: var(--sky-400); box-shadow: var(--shadow-focus); }
 .hub-busca svg { flex-shrink: 0; }
@@ -29,15 +29,15 @@
   border: none;
   background: transparent;
   font-size: 14.5px;
-  color: var(--ink-900);
+  color: var(--color-text-primary);
 }
 .hub-busca input:focus { box-shadow: none; }
 .hub-busca input::-webkit-search-cancel-button { display: none; }
 
 .hub-busca-limpar {
   border: none;
-  background: var(--neutral-50);
-  color: var(--ink-700);
+  background: var(--color-surface-muted);
+  color: var(--color-text-secondary);
   width: 24px;
   height: 24px;
   border-radius: 50%;
@@ -45,17 +45,17 @@
   line-height: 1;
   flex-shrink: 0;
 }
-.hub-busca-limpar:hover { background: var(--sky-100); color: var(--sky-500); }
+.hub-busca-limpar:hover { background: var(--color-accent-soft); color: var(--sky-500); }
 
 /* estados */
 .hub-estado {
-  background: var(--white);
-  border: 1px solid #EAEDEF;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: 40px 16px;
   text-align: center;
   font-size: 13.5px;
-  color: #84959c;
+  color: var(--color-text-muted);
 }
 
 .hub-aviso {
@@ -64,7 +64,7 @@
   font-size: 13px;
   margin-bottom: 16px;
 }
-.hub-aviso--erro { background: #FDECEC; color: #A32B2B; border: 1px solid #F5C9C9; }
+.hub-aviso--erro { background: var(--color-danger-bg); color: var(--color-danger-text); border: 1px solid var(--color-danger-border); }
 
 /* lista de estacionamentos */
 .hub-lista {
@@ -82,8 +82,8 @@
   align-items: flex-start;
   gap: 14px;
   text-align: left;
-  background: var(--white);
-  border: 1px solid #EAEDEF;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-1);
   padding: 16px 18px;
@@ -103,7 +103,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--sky-100);
+  background: var(--color-accent-soft);
   color: var(--sky-500);
 }
 
@@ -114,13 +114,13 @@
   font-family: var(--font-display);
   font-size: 15.5px;
   font-weight: 700;
-  color: var(--ink-900);
+  color: var(--color-text-primary);
 }
 .hub-card-endereco,
 .hub-card-cidade {
   display: block;
   font-size: 12.5px;
-  color: #84959c;
+  color: var(--color-text-muted);
   margin-top: 3px;
 }
 
@@ -141,13 +141,13 @@
   font-weight: 600;
   white-space: nowrap;
 }
-.hub-selo--livre { background: #E8F7F0; color: #1F7A57; }
-.hub-selo--lotado { background: #FDECEC; color: #A32B2B; }
-.hub-selo--neutro { background: #F1F3F4; color: #5b7280; }
+.hub-selo--livre { background: var(--color-success-bg); color: var(--color-success-text); }
+.hub-selo--lotado { background: var(--color-danger-bg); color: var(--color-danger-text); }
+.hub-selo--neutro { background: var(--color-surface-muted); color: var(--color-text-secondary); }
 
-.hub-card-total { font-size: 11.5px; color: #84959c; }
+.hub-card-total { font-size: 11.5px; color: var(--color-text-muted); }
 
-.hub-card-seta { flex-shrink: 0; color: #B7C3C9; align-self: center; display: flex; }
+.hub-card-seta { flex-shrink: 0; color: var(--color-text-muted); align-self: center; display: flex; }
 .hub-card:hover .hub-card-seta { color: var(--sky-500); }
 
 @media (max-width: 720px) {

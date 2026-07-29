@@ -2,6 +2,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import './AdminLayout.css';
 import { useAuth } from '../context/AuthContext';
 import { EstacionamentoAtivoProvider, useEstacionamentoAtivo } from '../context/EstacionamentoAtivoContext';
+import ThemeToggle from '../components/ThemeToggle';
 
 function SeletorEstacionamento() {
   const { estacionamentos, estacionamentoAtivoId, selecionar, carregando } = useEstacionamentoAtivo();
@@ -146,6 +147,7 @@ export default function AdminLayout({ children }) {
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" /><path d="m20 20-3.5-3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
               <input placeholder="Buscar placa, vaga, pessoa..." />
             </div>
+            <ThemeToggle />
             <button className="icon-btn" title="Notificações">
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M6 10a6 6 0 1 1 12 0c0 4 1.5 5.5 1.5 5.5H4.5S6 14 6 10Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" /><path d="M10 19a2 2 0 0 0 4 0" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>
               <span className="badge-dot"></span>

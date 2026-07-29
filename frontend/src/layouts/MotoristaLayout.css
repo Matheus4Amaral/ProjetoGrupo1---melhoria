@@ -2,7 +2,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: var(--neutral-50);
+  background: var(--color-page-bg);
 }
 
 /* topo */
@@ -17,8 +17,8 @@
   justify-content: space-between;
   gap: 16px;
   padding: 0 28px;
-  background: var(--ink-900);
-  color: var(--white);
+  background: var(--color-navigation);
+  color: var(--color-text-on-accent);
 }
 
 .motorista-marca {
@@ -29,7 +29,7 @@
   font-weight: 700;
   font-size: 19px;
   letter-spacing: .2px;
-  color: var(--white);
+  color: var(--color-text-on-accent);
   text-decoration: none;
 }
 .motorista-marca-ponto {
@@ -55,9 +55,9 @@
   color: rgba(255,255,255,0.6);
   text-decoration: none;
 }
-.motorista-nav-link:hover { color: var(--white); }
+.motorista-nav-link:hover { color: var(--color-text-on-accent); }
 .motorista-nav-link--ativo {
-  color: var(--ink-900);
+  color: var(--color-text-on-brand);
   background: var(--sky-400);
 }
 
@@ -65,7 +65,7 @@
 
 .motorista-avatar {
   width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
-  background: var(--sky-400); color: var(--ink-900);
+  background: var(--sky-400); color: var(--color-text-on-brand);
   font-family: var(--font-display); font-weight: 700; font-size: 13px;
   display: flex; align-items: center; justify-content: center;
 }
@@ -77,7 +77,7 @@
   color: rgba(255,255,255,0.55);
   display: inline-flex; align-items: center;
 }
-.motorista-sair:hover { color: var(--white); }
+.motorista-sair:hover { color: var(--color-text-on-accent); }
 
 /* conteudo */
 .motorista-conteudo {
