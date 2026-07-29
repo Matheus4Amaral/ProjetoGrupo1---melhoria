@@ -56,7 +56,6 @@ export default function Login() {
                 <div className="auth-brand">
                     <div className="auth-brand-logo">
                         <img src={Logo} alt="HubParking" />
-                        <span>HubParking</span>
                     </div>
 
                     <div className="auth-brand-bars">
@@ -80,7 +79,7 @@ export default function Login() {
                     <span className="auth-eyebrow">Acesso ao sistema</span>
 
                     <Text className="auth-titulo">
-                        Bem-vindo de volta
+                        Bem-vindo!
                     </Text>
 
                     <Text className="auth-subtitulo">

@@ -17,8 +17,8 @@
     position: relative;
     overflow: hidden;
 
-    background: linear-gradient(160deg, #4EB2EF 0%, #3ACFF5 55%, #3EC1F4 100%);
-    color: white;
+    background: #173746;
+    color: #ffffff;
 
     padding: 48px 40px;
 
@@ -39,20 +39,21 @@
 }
 
 .auth-brand-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
 .auth-brand-logo img {
-    width: 30px;
-    height: 30px;
-    object-fit: contain;
+  width: 110px;
+  height: auto;
+  filter: brightness(0) invert(1);
 }
 
 .auth-brand-logo span {
-    font-size: 18px;
-    font-weight: 700;
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
 }
 
 .auth-brand-bars {
