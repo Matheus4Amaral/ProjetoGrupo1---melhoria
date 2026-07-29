@@ -1,7 +1,9 @@
 import { NavLink, useLocation } from 'react-router-dom';
+import { useState } from 'react';
 import './AdminLayout.css';
 import { useAuth } from '../context/AuthContext';
 import { EstacionamentoAtivoProvider, useEstacionamentoAtivo } from '../context/EstacionamentoAtivoContext';
+import ConfirmModal from '../components/ConfirmModal/ConfirmModal';
 
 function SeletorEstacionamento() {
   const { estacionamentos, estacionamentoAtivoId, selecionar, carregando } = useEstacionamentoAtivo();
@@ -62,6 +64,7 @@ function obterTitulo(pathname) {
 export default function AdminLayout({ children }) {
   const { usuario, logout } = useAuth();
   const { pathname } = useLocation();
+  const [modalSairAberto, setModalSairAberto] = useState(false);
 
   const { eyebrow, titulo } = obterTitulo(pathname);
 
@@ -131,7 +134,7 @@ export default function AdminLayout({ children }) {
             <NavLink to="/admin/configuracoes" className="settings-btn" title="Configurações da conta">
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" strokeWidth="1.8" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1.08 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </NavLink>
-            <button className="logout-btn" title="Sair" onClick={logout}>
+            <button className="logout-btn" title="Sair" onClick={() => setModalSairAberto(true)}>
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M15 3h4a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-4M10 17l5-5-5-5M15 12H3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </button>
           </div>
@@ -162,6 +165,16 @@ export default function AdminLayout({ children }) {
         </div>
       </div>
     </div>
+
+    <ConfirmModal
+      aberto={modalSairAberto}
+      titulo="Sair da conta"
+      mensagem="Tem certeza que deseja sair?"
+      textoConfirmar="Sair"
+      textoCancelar="Cancelar"
+      onConfirmar={logout}
+      onCancelar={() => setModalSairAberto(false)}
+    />
     </EstacionamentoAtivoProvider>
   );
 }
