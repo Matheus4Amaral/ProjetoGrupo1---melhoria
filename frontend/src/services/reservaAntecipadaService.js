@@ -12,8 +12,13 @@ async function listarTodasReservas() {
     return await api.get('/reservas')
 }
 
+async function buscarReservaAtiva() {
+    return await api.get('/reservas/ativa/me')
+}
+
 export default {
     cadastrarReserva,
     cancelarReserva,
     listarTodasReservas,
+    buscarReservaAtiva,
 }

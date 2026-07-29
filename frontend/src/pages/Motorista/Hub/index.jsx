@@ -63,7 +63,7 @@ export default function Hub() {
         <section className="hub">
 
             <div className="hub-saudacao">
-                <h1>Olá, {primeiroNome(usuario?.nome)}! Onde vamos estacionar?</h1>
+                <h1>Onde vamos estacionar?</h1>
                 <p>
                     {carregando
                         ? "Buscando vagas perto de você..."

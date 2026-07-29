@@ -43,6 +43,7 @@ export default function AppRoutes() {
                 element={
                     <PrivateRoute>
                         <MotoristaLayout>
+                            <Painel />
                             <Hub />
                         </MotoristaLayout>
                     </PrivateRoute>
