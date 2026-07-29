@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react"
-import { Link, useParams } from "react-router-dom"
+import { Link, useParams, useNavigate } from "react-router-dom"
 
 import './styles.css'
 
@@ -25,6 +25,7 @@ function situacaoDaVaga(vaga) {
 export default function EstacionamentoVagas() {
     const { id } = useParams()
     const { usuario } = useAuth()
+    const navigate = useNavigate()
 
     const [estacionamento, setEstacionamento] = useState(null)
     const [vagas, setVagas] = useState([])
@@ -98,7 +99,15 @@ export default function EstacionamentoVagas() {
             agrupados.get(vaga.piso_id).vagas.push(vaga)
         })
 
-        return Array.from(agrupados.values())
+        const arrayPisos = Array.from(agrupados.values())
+        
+        arrayPisos.sort((a, b) => a.andar - b.andar)
+
+        arrayPisos.forEach(piso => {
+            piso.vagas.sort((a, b) => a.nome.localeCompare(b.nome, undefined, { numeric: true }))
+        })
+
+        return arrayPisos
     }, [vagas])
 
     function abrirSelecaoDeVeiculo(vaga) {
@@ -131,7 +140,7 @@ export default function EstacionamentoVagas() {
             setSucessoAcao(`Estacionado na vaga ${vagaSelecionada.nome}!`)
             setVagaSelecionada(null)
             setVeiculoParaEstacionar("")
-            await carregar()
+            navigate('/motorista')
         } catch (error) {
             setErroAcao(error.message)
         } finally {
@@ -258,7 +267,7 @@ export default function EstacionamentoVagas() {
                             >
                                 {meusVeiculos.map((veiculo) => (
                                     <option key={veiculo.id} value={veiculo.id}>
-                                        {veiculo.placa} — {veiculo.marca} {veiculo.modelo}
+                                        {veiculo.marca} {veiculo.modelo} — {veiculo.placa}
                                     </option>
                                 ))}
                             </select>
@@ -319,17 +328,17 @@ export default function EstacionamentoVagas() {
                                     const situacao = situacaoDaVaga(vaga)
 
                                     const clicavel = situacao.modificador === "livre" && !ocupacaoAtiva && meusVeiculos.length > 0
+                                    const isSelecionada = vagaSelecionada?.id === vaga.id
 
                                     return (
                                         <li key={vaga.id}>
                                             <button
                                                 type="button"
-                                                className={`detalhe-vaga detalhe-vaga--${situacao.modificador}${clicavel ? " detalhe-vaga--clicavel" : ""}`}
+                                                className={`detalhe-vaga detalhe-vaga--${situacao.modificador}${clicavel ? " detalhe-vaga--clicavel" : ""}${isSelecionada ? " detalhe-vaga--selecionada" : ""}`}
                                                 onClick={() => clicavel && abrirSelecaoDeVeiculo(vaga)}
                                                 disabled={!clicavel}
                                             >
                                                 <span className="detalhe-vaga-nome">{vaga.nome}</span>
-                                                <span className="detalhe-vaga-codigo">{vaga.codigo}</span>
                                                 <span className="detalhe-vaga-situacao">{situacao.rotulo}</span>
                                             </button>
                                         </li>
