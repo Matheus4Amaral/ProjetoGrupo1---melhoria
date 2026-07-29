@@ -165,4 +165,20 @@ rotas.get('/estacionamento/:estacionamento_id', VeiculoVagaController.listarMovi
  */
 rotas.get('/:id', VeiculoVagaController.buscarPorId)
 
+/**
+ * @swagger
+ * /veiculo-vaga/ativa/me:
+ *   get:
+ *     summary: Busca ocupação ativa do motorista logado
+ *     tags: [VeículoVaga]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Ocupação encontrada.
+ *       401:
+ *         $ref: '#/components/responses/Unauthorized'
+ */
+rotas.get('/ativa/me', VeiculoVagaController.buscarOcupacaoAtivaPorUsuario)
+
 module.exports = rotas

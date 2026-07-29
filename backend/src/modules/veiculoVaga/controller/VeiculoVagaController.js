@@ -68,6 +68,19 @@ class VeiculoVagaController {
         }
     }
 
+    async buscarOcupacaoAtivaPorUsuario(req, res) {
+        try {
+            const pessoaId = req.usuario.id
+            const registro = await VeiculoVagaService.buscarOcupacaoAtivaPorUsuario(pessoaId)
+            
+            return res.status(200).json(registro || null)
+        } catch (error) {
+            return res.status(400).json({
+                erro: error.message
+            })
+        }
+    }
+
     async listarHistoricoPorVeiculo(req, res) {
         try {
             const { veiculo_id } = req.params

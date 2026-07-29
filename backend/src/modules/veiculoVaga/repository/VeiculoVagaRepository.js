@@ -52,6 +52,27 @@ class VeiculoVagaRepository {
             .first()
     }
 
+    async buscarOcupacaoAtivaPorPessoaId(pessoaId) {
+        return db("veiculo_vaga")
+            .join("veiculo", "veiculo.id", "veiculo_vaga.veiculo_id")
+            .join("vaga", "vaga.id", "veiculo_vaga.vaga_id")
+            .join("piso", "piso.id", "vaga.piso_id")
+            .where("veiculo.pessoa_id", pessoaId)
+            .whereNull("veiculo_vaga.desocupado_em")
+            .select(
+                "veiculo_vaga.id",
+                "veiculo.placa",
+                "veiculo.marca",
+                "veiculo.modelo",
+                "vaga.nome as vaga_nome",
+                "vaga.codigo as vaga_codigo",
+                "piso.nome as piso_nome",
+                "veiculo_vaga.estacionado_em"
+            )
+            .orderBy("veiculo_vaga.estacionado_em", "desc")
+            .first()
+    }
+
     async listarHistoricoPorVeiculoId(veiculoId) {
         return db("veiculo_vaga")
             .where({ veiculo_id: veiculoId })

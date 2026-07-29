@@ -26,6 +26,10 @@ class ReservaService {
     return await ReservaRepository.listarTodasReservas()
   }
 
+  async buscarReservaAtivaPorUsuario(pessoaId) {
+    return await ReservaRepository.buscarReservaAtivaPorPessoaId(pessoaId)
+  }
+
   async cancelarReserva(id) {
     const reservaExistente = await ReservaRepository.buscarReservaPorId(id)
 

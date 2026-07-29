@@ -28,6 +28,16 @@ class ReservaController {
     }
   }
 
+  async buscarReservaAtivaPorUsuario(req, res) {
+    try {
+        const pessoaId = req.usuario.id
+        const reserva = await ReservaService.buscarReservaAtivaPorUsuario(pessoaId)
+        return res.status(200).json(reserva || null)
+    } catch (error) {
+        return res.status(400).json({ erro: error.message })
+    }
+  }
+
   async cancelarReserva(req, res) {
     try {
       const reserva = await ReservaService.cancelarReserva(req.params.id)
