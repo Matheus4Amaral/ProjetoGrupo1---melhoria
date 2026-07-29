@@ -93,6 +93,20 @@ class VagaController {
             })
         }
     }
+
+    async excluirVaga(req, res){
+        try {
+            await VagaService.excluirVaga(req.params.id)
+
+            return res.status(200).json({
+                sucesso: 'Vaga apagada com sucesso!'
+            })
+        } catch (error) {
+            return res.status(400).json({
+                erro: error.message
+            })
+        }
+    }
 }
 
 module.exports = new VagaController()

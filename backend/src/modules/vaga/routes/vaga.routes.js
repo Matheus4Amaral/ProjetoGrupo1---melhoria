@@ -184,4 +184,27 @@ rotas.get('/:id', VagaController.buscarVagaPorId)
  */
 rotas.put('/:id', adminMiddleware, VagaController.editarVaga)
 
+/**
+ * @swagger
+ * /vagas/{id}:
+ *   delete:
+ *     summary: Exclui uma vaga
+ *     tags: [Vaga]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *     responses:
+ *       200:
+ *         description: Vaga excluída.
+ *       401:
+ *         $ref: '#/components/responses/Unauthorized'
+ */
+rotas.delete('/:id', adminMiddleware, VagaController.excluirVaga)
+
 module.exports = rotas

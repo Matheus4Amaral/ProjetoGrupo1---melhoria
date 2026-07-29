@@ -71,6 +71,20 @@ class VagaService {
         return await VagaRepository.editarVaga(id, dados)
     }
 
+    async excluirVaga(id){
+        const vagaExistente = await VagaRepository.buscarVagaPorId(id)
+
+        if(!vagaExistente) {
+            throw new Error("Ops! Parece que essa vaga não existe")
+        }
+
+        if(vagaExistente.is_ocupada) {
+            throw new Error("Não é possível excluir uma vaga que está ocupada")
+        }
+
+        return await VagaRepository.excluirVaga(id)
+    }
+
 }
 
 module.exports = new VagaService()
