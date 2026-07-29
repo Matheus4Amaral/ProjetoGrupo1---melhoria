@@ -5,6 +5,7 @@ import './styles.css'
 
 import veiculoService from '@/services/veiculoService'
 import { useAuth } from '@/context/AuthContext'
+import useMensagemTemporaria from '@/hooks/useMensagemTemporaria'
 
 const FORMULARIO_INICIAL = {
     placa: "",
@@ -28,7 +29,7 @@ export default function MeusVeiculos() {
     const [editandoId, setEditandoId] = useState(null)
     const [salvando, setSalvando] = useState(false)
     const [erroForm, setErroForm] = useState("")
-    const [sucesso, setSucesso] = useState("")
+    const [sucesso, setSucesso] = useMensagemTemporaria()
 
     const editando = editandoId !== null
 

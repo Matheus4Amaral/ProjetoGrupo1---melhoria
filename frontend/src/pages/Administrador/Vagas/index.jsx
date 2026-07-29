@@ -10,6 +10,7 @@ import vagaService from '@/services/vagaService'
 import pisoService from '@/services/pisoService'
 import { useEstacionamentoAtivo } from '@/context/EstacionamentoAtivoContext'
 import ConfirmacaoSenhaModal from '@/components/ConfirmacaoSenhaModal'
+import useMensagemTemporaria from '@/hooks/useMensagemTemporaria'
 
 const FORMULARIO_INICIAL = {
     codigo: "",
@@ -36,7 +37,7 @@ export default function Vagas() {
     const [pisos, setPisos] = useState([])
     const [carregandoPisos, setCarregandoPisos] = useState(true)
     const [erro, setErro] = useState("")
-    const [sucesso, setSucesso] = useState("")
+    const [sucesso, setSucesso] = useMensagemTemporaria()
     const [salvando, setSalvando] = useState(false)
     const [modalAberto, setModalAberto] = useState(false)
 

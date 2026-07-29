@@ -10,6 +10,7 @@ import Text from '@/components/Text'
 
 import Logo from '@/assets/logo.png'
 import { useAuth } from '@/context/AuthContext'
+import useMensagemTemporaria from '@/hooks/useMensagemTemporaria'
 
 export default function Login() {
     const navigate = useNavigate()
@@ -18,7 +19,7 @@ export default function Login() {
 
     const [formulario, setFormulario] = useState({ email: "", senha: "" })
     const [erro, setErro] = useState("")
-    const [sucesso, setSucesso] = useState(
+    const [sucesso, setSucesso] = useMensagemTemporaria(
         location.state?.cadastroConcluido ? "Conta criada com sucesso! Faça login para continuar." : ""
     )
     const [carregando, setCarregando] = useState(false)

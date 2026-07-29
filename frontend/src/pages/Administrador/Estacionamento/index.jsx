@@ -10,6 +10,7 @@ import CidadeSelect from '@/components/CidadeSelect'
 import estacionamentoService from '@/services/estacionamentoService'
 import { useAuth } from '@/context/AuthContext'
 import { useEstacionamentoAtivo } from '@/context/EstacionamentoAtivoContext'
+import useMensagemTemporaria from '@/hooks/useMensagemTemporaria'
 
 const FORMULARIO_INICIAL = {
     nome: "",
@@ -41,7 +42,7 @@ export default function Estacionamento() {
     const [cidade, setCidade] = useState(null)
     const [cidadeSelectKey, setCidadeSelectKey] = useState(0)
     const [erro, setErro] = useState("")
-    const [sucesso, setSucesso] = useState("")
+    const [sucesso, setSucesso] = useMensagemTemporaria()
     const [salvando, setSalvando] = useState(false)
 
     const carregarEstacionamentos = useCallback(async () => {

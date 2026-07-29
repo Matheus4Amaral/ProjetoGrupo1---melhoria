@@ -9,6 +9,7 @@ import veiculoService from '@/services/veiculoService'
 import reservaService from '@/services/reservaService'
 import reservaAntecipadaService from '@/services/reservaAntecipadaService'
 import { useAuth } from '@/context/AuthContext'
+import useMensagemTemporaria from '@/hooks/useMensagemTemporaria'
 
 function situacaoDaVaga(vaga) {
     if (vaga.em_manutencao) {
@@ -39,7 +40,7 @@ export default function EstacionamentoVagas() {
     const [veiculoParaEstacionar, setVeiculoParaEstacionar] = useState("")
     const [carregandoAcao, setCarregandoAcao] = useState(false)
     const [erroAcao, setErroAcao] = useState("")
-    const [sucessoAcao, setSucessoAcao] = useState("")
+    const [sucessoAcao, setSucessoAcao] = useMensagemTemporaria()
 
     useEffect(() => {
         carregar()
