@@ -1,21 +1,37 @@
 import { useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
 import './styles.css';
 import { useAuth } from '@/context/AuthContext';
 import { EstacionamentoAtivoProvider, useEstacionamentoAtivo } from '@/context/EstacionamentoAtivoContext';
 import ConfirmacaoModal from '@/components/ConfirmacaoModal';
+// import { useNavigate } from 'react-router-dom';
+import {
+  NavLink,
+  useLocation,
+  useNavigate
+} from 'react-router-dom';
 
 function SeletorEstacionamento() {
+  //useNavigate 
+  const navigate = useNavigate();
   const { estacionamentos, estacionamentoAtivoId, selecionar, carregando } = useEstacionamentoAtivo();
 
   if (carregando) {
     return <div className="estac-seletor estac-seletor--vazio">Carregando estacionamentos...</div>;
   }
 
-  if (estacionamentos.length === 0) {
-    return <div className="estac-seletor estac-seletor--vazio">Nenhum estacionamento — cadastre um</div>;
-  }
-
+  //Botão para cadastrar estacionamento caso não haja nenhum
+ if (estacionamentos.length === 0) {
+  return (
+    <button
+      type="button"
+      className="estac-seletor estac-seletor--vazio"
+      onClick={() => navigate('/admin/estacionamento')}
+      title="Clique para cadastrar um estacionamento"
+    >
+      Nenhum estacionamento.
+    </button>
+  );
+}
   return (
     <label className="estac-seletor">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" /></svg>

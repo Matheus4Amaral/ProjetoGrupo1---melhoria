@@ -95,7 +95,29 @@
   color: var(--ink-900); cursor: pointer; max-width: 200px;
 }
 .estac-seletor select:focus { box-shadow: none; }
-.estac-seletor--vazio { font-size: 12.5px; font-weight: 500; color: var(--ink-700); }
+.estac-seletor--vazio {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--ink-700);
+
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.estac-seletor--vazio:hover {
+  background: var(--sky-100);
+  color: var(--ink-900);
+}
+
+.estac-seletor--vazio:focus-visible {
+  outline: 2px solid var(--sky-400);
+  outline-offset: 2px;
+}
 
 .content { flex: 1; overflow-y: auto; padding: 26px 28px 60px; }
 
