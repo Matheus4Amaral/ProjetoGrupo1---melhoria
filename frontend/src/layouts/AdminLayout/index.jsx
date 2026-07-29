@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import './styles.css';
 import { useAuth } from '@/context/AuthContext';
 import { EstacionamentoAtivoProvider, useEstacionamentoAtivo } from '@/context/EstacionamentoAtivoContext';
+import ConfirmacaoModal from '@/components/ConfirmacaoModal';
 
 function SeletorEstacionamento() {
   const { estacionamentos, estacionamentoAtivoId, selecionar, carregando } = useEstacionamentoAtivo();
@@ -62,7 +64,14 @@ export default function AdminLayout({ children }) {
   const { usuario, logout } = useAuth();
   const { pathname } = useLocation();
 
+  const [confirmandoLogout, setConfirmandoLogout] = useState(false);
+
   const { eyebrow, titulo } = obterTitulo(pathname);
+
+  function handleConfirmarLogout() {
+    setConfirmandoLogout(false);
+    logout();
+  }
 
   return (
     <EstacionamentoAtivoProvider>
@@ -126,7 +135,7 @@ export default function AdminLayout({ children }) {
             <div className="who">{usuario?.nome || 'Usuário'}</div>
             <div className="role">{usuario?.is_admin ? 'Administrador' : 'Operador'}</div>
           </div>
-          <button className="logout-btn" title="Sair" onClick={logout}>
+          <button className="logout-btn" title="Sair" onClick={() => setConfirmandoLogout(true)}>
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M15 3h4a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-4M10 17l5-5-5-5M15 12H3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
           </button>
         </div>
@@ -155,6 +164,16 @@ export default function AdminLayout({ children }) {
           {children}
         </div>
       </div>
+
+      <ConfirmacaoModal
+        isOpen={confirmandoLogout}
+        titulo="Sair da conta"
+        mensagem="Tem certeza que deseja sair do sistema? Você precisará fazer login novamente para continuar."
+        textoConfirmar="Sair"
+        variante="perigo"
+        onConfirm={handleConfirmarLogout}
+        onClose={() => setConfirmandoLogout(false)}
+      />
     </div>
     </EstacionamentoAtivoProvider>
   );

@@ -1,11 +1,20 @@
+import { useState } from "react"
 import { Link, NavLink } from "react-router-dom"
 
 import './styles.css'
 
 import { useAuth } from '@/context/AuthContext'
+import ConfirmacaoModal from '@/components/ConfirmacaoModal'
 
 export default function MotoristaLayout({ children }) {
     const { usuario, logout } = useAuth()
+
+    const [confirmandoLogout, setConfirmandoLogout] = useState(false)
+
+    function handleConfirmarLogout() {
+        setConfirmandoLogout(false)
+        logout()
+    }
 
     return (
         <div className="motorista-app">
@@ -39,7 +48,11 @@ export default function MotoristaLayout({ children }) {
                         <div className="motorista-usuario-nome">{usuario?.nome || "Motorista"}</div>
                         <div className="motorista-usuario-papel">Motorista</div>
                     </div>
-                    <button className="motorista-sair" title="Sair" onClick={logout}>
+                    <button
+                        className="motorista-sair"
+                        title="Sair"
+                        onClick={() => setConfirmandoLogout(true)}
+                    >
                         <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M15 3h4a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-4M10 17l5-5-5-5M15 12H3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
                     </button>
                 </div>
@@ -48,6 +61,16 @@ export default function MotoristaLayout({ children }) {
             <main className="motorista-conteudo">
                 {children}
             </main>
+
+            <ConfirmacaoModal
+                isOpen={confirmandoLogout}
+                titulo="Sair da conta"
+                mensagem="Tem certeza que deseja sair do sistema? Você precisará fazer login novamente para continuar."
+                textoConfirmar="Sair"
+                variante="perigo"
+                onConfirm={handleConfirmarLogout}
+                onClose={() => setConfirmandoLogout(false)}
+            />
         </div>
     )
 }

@@ -1,0 +1,110 @@
+.confirmacao-backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(23, 49, 62, 0.45);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    z-index: 9999;
+    animation: confirmacao-fade-in 0.2s ease-out;
+}
+
+.confirmacao-container {
+    background: var(--white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-2);
+    width: 100%;
+    max-width: 420px;
+    overflow: hidden;
+    animation: confirmacao-slide-up 0.2s ease-out;
+}
+
+.confirmacao-header {
+    padding: 18px 24px 0 24px;
+}
+
+.confirmacao-header h3 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink-900);
+}
+
+.confirmacao-body {
+    padding: 12px 24px 24px 24px;
+}
+
+.confirmacao-body p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink-700);
+}
+
+.confirmacao-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 16px 24px;
+    background-color: var(--neutral-50);
+    border-top: 1px solid rgba(23, 49, 62, 0.08);
+}
+
+.confirmacao-btn {
+    height: 40px;
+    padding: 0 18px;
+    border-radius: var(--radius-sm);
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.confirmacao-btn--cancelar {
+    background: var(--white);
+    color: var(--ink-700);
+    border: 1.5px solid #E1E7EA;
+}
+
+.confirmacao-btn--cancelar:hover {
+    border-color: var(--sky-400);
+    color: var(--sky-500);
+}
+
+.confirmacao-btn--primaria {
+    background: var(--sky-400);
+    color: var(--white);
+}
+
+.confirmacao-btn--primaria:hover {
+    background: var(--sky-500);
+}
+
+.confirmacao-btn--perigo {
+    background: #DC2626;
+    color: var(--white);
+}
+
+.confirmacao-btn--perigo:hover {
+    background: #B91C1C;
+}
+
+@keyframes confirmacao-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes confirmacao-slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
