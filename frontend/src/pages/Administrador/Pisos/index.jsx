@@ -20,7 +20,12 @@ const FORMULARIO_INICIAL = {
 
 export default function Pisos() {
     const navigate = useNavigate()
-    const { estacionamentoAtivoId, estacionamentoAtivo } = useEstacionamentoAtivo()
+    const {
+        estacionamentos,
+        estacionamentoAtivoId,
+        selecionar,
+        carregando: carregandoEstacionamentos,
+    } = useEstacionamentoAtivo()
 
     const [modo, setModo] = useState("lista")
 
@@ -33,6 +38,10 @@ export default function Pisos() {
     const [sucesso, setSucesso] = useMensagemTemporaria()
     const [salvando, setSalvando] = useState(false)
     const [modalAberto, setModalAberto] = useState(false)
+
+    // Enquanto o usuário não escolhe no formulário, vale o estacionamento ativo do topo.
+    const [estacionamentoEscolhido, setEstacionamentoEscolhido] = useState(null)
+    const estacionamentoDestinoId = estacionamentoEscolhido ?? estacionamentoAtivoId ?? ""
 
     const carregarPisos = useCallback(async () => {
         if (!estacionamentoAtivoId) {
@@ -64,6 +73,7 @@ export default function Pisos() {
 
     function handleLimpar() {
         setFormulario(FORMULARIO_INICIAL)
+        setEstacionamentoEscolhido(null)
         setErro("")
         setSucesso("")
     }
@@ -100,8 +110,8 @@ export default function Pisos() {
             return
         }
 
-        if (!estacionamentoAtivoId) {
-            setErro("Selecione um estacionamento ativo no topo antes de cadastrar pisos.")
+        if (!estacionamentoDestinoId) {
+            setErro("Selecione o estacionamento em que o piso será cadastrado.")
             return
         }
 
@@ -120,12 +130,21 @@ export default function Pisos() {
                 nome: formulario.nome.trim(),
                 andar,
                 vagas,
-                estacionamento_id: estacionamentoAtivoId,
+                estacionamento_id: estacionamentoDestinoId,
             })
 
             setFormulario(FORMULARIO_INICIAL)
             setSucesso(`Piso cadastrado com sucesso: ${piso.nome} (${piso.codigo}).`)
-            carregarPisos()
+
+            // Se o piso foi criado em outro estacionamento, o painel passa a mostrar esse,
+            // senão o piso recém-criado não apareceria na lista.
+            if (estacionamentoDestinoId !== estacionamentoAtivoId) {
+                selecionar(estacionamentoDestinoId)
+                setEstacionamentoEscolhido(null)
+            } else {
+                carregarPisos()
+            }
+
             setModalAberto(false)
         } catch (error) {
             setErro(error.message)
@@ -213,15 +232,39 @@ export default function Pisos() {
                         </div>
 
                         <div className="piso-campo">
-                            <label>Estacionamento</label>
-                            <div className="piso-estacionamento-ativo">
-                                {estacionamentoAtivo
-                                    ? estacionamentoAtivo.nome
-                                    : "Nenhum estacionamento ativo selecionado"}
-                            </div>
-                            <span className="ajuda">
-                                O piso será criado no estacionamento ativo. Troque no seletor do topo, se necessário.
-                            </span>
+                            <label htmlFor="estacionamento_id">Estacionamento</label>
+                            <select
+                                id="estacionamento_id"
+                                className="piso-select"
+                                value={estacionamentoDestinoId}
+                                onChange={(e) => setEstacionamentoEscolhido(e.target.value)}
+                                disabled={carregandoEstacionamentos}
+                                required
+                            >
+                                <option value="">
+                                    {carregandoEstacionamentos
+                                        ? "Carregando estacionamentos..."
+                                        : "Selecione um estacionamento"}
+                                </option>
+
+                                {estacionamentos.map((estacionamento) => (
+                                    <option key={estacionamento.id} value={estacionamento.id}>
+                                        {estacionamento.nome}
+                                    </option>
+                                ))}
+                            </select>
+
+                            {!carregandoEstacionamentos && estacionamentos.length === 0 && (
+                                <span className="ajuda">
+                                    Nenhum estacionamento cadastrado. Cadastre um estacionamento antes de criar pisos.
+                                </span>
+                            )}
+
+                            {estacionamentoDestinoId && estacionamentoDestinoId !== estacionamentoAtivoId && (
+                                <span className="ajuda">
+                                    Após o cadastro, o painel passa a mostrar esse estacionamento.
+                                </span>
+                            )}
                         </div>
 
                         {erro && <div className="piso-aviso piso-aviso--erro">{erro}</div>}
@@ -237,7 +280,7 @@ export default function Pisos() {
                                 Limpar
                             </button>
 
-                            <Button type="submit" disabled={salvando || !estacionamentoAtivoId}>
+                            <Button type="submit" disabled={salvando || !estacionamentoDestinoId}>
                                 {salvando ? "Cadastrando..." : "Cadastrar piso"}
                             </Button>
                         </div>
