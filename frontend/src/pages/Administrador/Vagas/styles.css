@@ -96,6 +96,27 @@
 .vaga-botao-limpar:hover { border-color: var(--sky-400); color: var(--sky-500); }
 
 /* listagem de vagas */
+.vaga-filtros {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.vaga-filtro-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 200px;
+}
+
+.vaga-filtro-grupo label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-700);
+}
+
 .vaga-card--lista { max-width: 980px; }
 
 .vaga-estado-vazio {

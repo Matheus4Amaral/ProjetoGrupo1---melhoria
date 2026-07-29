@@ -24,6 +24,9 @@ export default function Vagas() {
 
     const [modo, setModo] = useState("lista")
 
+    const [filtroPiso, setFiltroPiso] = useState("")
+    const [filtroOcupacao, setFiltroOcupacao] = useState("")
+
     const [vagas, setVagas] = useState([])
     const [carregandoVagas, setCarregandoVagas] = useState(true)
     const [erroLista, setErroLista] = useState("")
@@ -141,6 +144,16 @@ export default function Vagas() {
             setSalvando(false)
         }
     }
+
+    const vagasFiltradas = vagas.filter((vaga) => {
+        const passaPiso = filtroPiso === "" || vaga.piso_id === filtroPiso;
+        const passaOcupacao = 
+            filtroOcupacao === "" ||
+            (filtroOcupacao === "ocupadas" && vaga.is_ocupada) ||
+            (filtroOcupacao === "livres" && !vaga.is_ocupada);
+
+        return passaPiso && passaOcupacao;
+    });
 
     if (modo === "cadastro") {
         return (
@@ -278,6 +291,41 @@ export default function Vagas() {
                     </Button>
                 </div>
 
+                {/* Filtros */}
+                {!carregandoVagas && vagas.length > 0 && (
+                    <div className="vaga-filtros">
+                        <div className="vaga-filtro-grupo">
+                            <label htmlFor="filtro_piso">Filtrar por Piso:</label>
+                            <select
+                                id="filtro_piso"
+                                className="vaga-select"
+                                value={filtroPiso}
+                                onChange={(e) => setFiltroPiso(e.target.value)}
+                            >
+                                <option value="">Todos os pisos</option>
+                                {pisos.map((piso) => (
+                                    <option key={piso.id} value={piso.id}>
+                                        {piso.nome}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="vaga-filtro-grupo">
+                            <label htmlFor="filtro_ocupacao">Filtrar por Ocupação:</label>
+                            <select
+                                id="filtro_ocupacao"
+                                className="vaga-select"
+                                value={filtroOcupacao}
+                                onChange={(e) => setFiltroOcupacao(e.target.value)}
+                            >
+                                <option value="">Todas</option>
+                                <option value="livres">Livres</option>
+                                <option value="ocupadas">Ocupadas</option>
+                            </select>
+                        </div>
+                    </div>
+                )}
+
                 {erroLista && <div className="vaga-aviso vaga-aviso--erro">{erroLista}</div>}
 
                 {carregandoVagas && (
@@ -290,7 +338,13 @@ export default function Vagas() {
                     </div>
                 )}
 
-                {!carregandoVagas && vagas.length > 0 && (
+                {!carregandoVagas && !erroLista && vagas.length > 0 && vagasFiltradas.length === 0 && (
+                    <div className="vaga-estado-vazio">
+                        Nenhuma vaga encontrada para os filtros aplicados.
+                    </div>
+                )}
+
+                {!carregandoVagas && vagasFiltradas.length > 0 && (
                     <>
                         <div className="vaga-tabela-wrap">
                             <table className="vaga-tabela">
@@ -305,7 +359,7 @@ export default function Vagas() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {vagas.map((vaga) => (
+                                    {vagasFiltradas.map((vaga) => (
                                         <tr key={vaga.id}>
                                             <td>{vaga.nome}</td>
                                             <td className="vaga-tabela-mono">{vaga.codigo}</td>
@@ -338,7 +392,7 @@ export default function Vagas() {
                         </div>
 
                         <ul className="vaga-lista-mobile">
-                            {vagas.map((vaga) => (
+                            {vagasFiltradas.map((vaga) => (
                                 <li key={vaga.id} className="vaga-item-mobile">
                                     <div className="vaga-item-mobile-topo">
                                         <span className="vaga-item-mobile-nome">{vaga.nome}</span>
