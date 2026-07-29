@@ -51,6 +51,15 @@ class PisoRepository{
             .orderBy("piso.andar")
     }
 
+    async buscarPisoPorCodigoNoEstacionamento(codigo, estacionamentoId) {
+        return await db("piso")
+            .where({
+                codigo,
+                estacionamento_id: estacionamentoId
+            })
+            .first()
+    }
+
     async buscarPisoPorCodigo(codigo) {
         return db("piso")
             .where({ codigo })

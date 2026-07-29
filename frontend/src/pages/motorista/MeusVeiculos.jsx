@@ -182,6 +182,8 @@ export default function MeusVeiculos() {
                             placeholder="Fiat, VW, Toyota..."
                             value={formulario.marca}
                             onChange={handleChange("marca")}
+                            maxLength={20}
+                            required
                         />
                     </div>
 
@@ -193,6 +195,8 @@ export default function MeusVeiculos() {
                             placeholder="Argo, Gol, Corolla..."
                             value={formulario.modelo}
                             onChange={handleChange("modelo")}
+                            maxLength={40}
+                            required
                         />
                     </div>
 
@@ -205,6 +209,7 @@ export default function MeusVeiculos() {
                             value={formulario.ano}
                             onChange={handleChange("ano")}
                             maxLength={4}
+                            required
                         />
                     </div>
 
@@ -216,6 +221,8 @@ export default function MeusVeiculos() {
                             placeholder="Prata, Preto..."
                             value={formulario.cor}
                             onChange={handleChange("cor")}
+                            maxLength={20}
+                            required
                         />
                     </div>
 
@@ -226,6 +233,7 @@ export default function MeusVeiculos() {
                             className="veiculos-input"
                             value={formulario.combustivel}
                             onChange={handleChange("combustivel")}
+                            required
                         >
                             <option value="">Selecione...</option>
                             {COMBUSTIVEIS.map((opcao) => (

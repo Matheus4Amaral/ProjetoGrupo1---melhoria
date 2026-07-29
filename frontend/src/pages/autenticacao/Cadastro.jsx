@@ -76,6 +76,8 @@ export default function Cadastro() {
             navigate("/login", { state: { cadastroConcluido: true } })
         } catch (error) {
             setErro(error.message)
+            console.error("ERRO COMPLETO:", error)
+            console.error("RESPOSTA DO BACKEND:", error.response?.data)
         } finally {
             setCarregando(false)
         }

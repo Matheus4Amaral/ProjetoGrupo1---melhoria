@@ -198,7 +198,7 @@ export default function Estacionamento() {
                                     placeholder="Somente números"
                                     value={formulario.cnpj}
                                     onChange={handleChange("cnpj")}
-                                    maxLength={18}
+                                    maxLength={14}
                                     required
                                 />
                                 <span className="ajuda">Precisa ser único entre os estacionamentos.</span>
