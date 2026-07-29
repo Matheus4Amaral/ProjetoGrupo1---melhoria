@@ -1,15 +1,15 @@
 import { useState } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 
-import "./Auth.css"
+import '../styles.css'
 
-import Container from "../../components/Container"
-import Button from "../../components/Button"
-import Input from "../../components/Input"
-import Text from "../../components/Text"
+import Container from '@/components/Container'
+import Button from '@/components/Button'
+import Input from '@/components/Input'
+import Text from '@/components/Text'
 
-import Logo from "../../assets/logo.png"
-import { useAuth } from "../../context/AuthContext"
+import Logo from '@/assets/logo.png'
+import { useAuth } from '@/context/AuthContext'
 
 export default function Login() {
     const navigate = useNavigate()

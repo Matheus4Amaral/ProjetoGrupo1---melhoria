@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-import "./Pisos.css"
+import './styles.css'
 
-import Button from "../../components/Button"
-import Input from "../../components/Input"
+import Button from '@/components/Button'
+import Input from '@/components/Input'
 
-import pisoService from "../../services/pisoService"
-import { useEstacionamentoAtivo } from "../../context/EstacionamentoAtivoContext"
+import pisoService from '@/services/pisoService'
+import { useEstacionamentoAtivo } from '@/context/EstacionamentoAtivoContext'
 
 const FORMULARIO_INICIAL = {
     codigo: "",

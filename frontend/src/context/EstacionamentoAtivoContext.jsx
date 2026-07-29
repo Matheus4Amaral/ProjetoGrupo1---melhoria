@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react"
 
-import estacionamentoService from "../services/estacionamentoService"
+import estacionamentoService from '@/services/estacionamentoService'
 import { useAuth } from "./AuthContext"
 
 const EstacionamentoAtivoContext = createContext(null)

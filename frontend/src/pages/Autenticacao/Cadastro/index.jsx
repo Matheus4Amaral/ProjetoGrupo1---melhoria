@@ -1,16 +1,16 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 
-import "./Auth.css"
+import '../styles.css'
 
-import Container from "../../components/Container"
-import Button from "../../components/Button"
-import Input from "../../components/Input"
-import Text from "../../components/Text"
-import CidadeSelect from "../../components/CidadeSelect"
+import Container from '@/components/Container'
+import Button from '@/components/Button'
+import Input from '@/components/Input'
+import Text from '@/components/Text'
+import CidadeSelect from '@/components/CidadeSelect'
 
-import Logo from "../../assets/logo.png"
-import autenticacaoService from "../../services/autenticacaoService"
+import Logo from '@/assets/logo.png'
+import autenticacaoService from '@/services/autenticacaoService'
 
 const FORMULARIO_INICIAL = {
     tipo: "motorista",

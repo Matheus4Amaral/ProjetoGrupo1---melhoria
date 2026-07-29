@@ -1,14 +1,14 @@
 import { useEffect, useMemo, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 
-import "./EstacionamentoVagas.css"
+import './styles.css'
 
-import estacionamentoService from "../../services/estacionamentoService"
-import vagaService from "../../services/vagaService"
-import veiculoService from "../../services/veiculoService"
-import reservaService from "../../services/reservaService"
-import reservaAntecipadaService from "../../services/reservaAntecipadaService"
-import { useAuth } from "../../context/AuthContext"
+import estacionamentoService from '@/services/estacionamentoService'
+import vagaService from '@/services/vagaService'
+import veiculoService from '@/services/veiculoService'
+import reservaService from '@/services/reservaService'
+import reservaAntecipadaService from '@/services/reservaAntecipadaService'
+import { useAuth } from '@/context/AuthContext'
 
 function situacaoDaVaga(vaga) {
     if (vaga.em_manutencao) {

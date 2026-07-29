@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import './AdminLayout.css';
-import { useAuth } from '../context/AuthContext';
-import { EstacionamentoAtivoProvider, useEstacionamentoAtivo } from '../context/EstacionamentoAtivoContext';
+import './styles.css';
+import { useAuth } from '@/context/AuthContext';
+import { EstacionamentoAtivoProvider, useEstacionamentoAtivo } from '@/context/EstacionamentoAtivoContext';
 
 function SeletorEstacionamento() {
   const { estacionamentos, estacionamentoAtivoId, selecionar, carregando } = useEstacionamentoAtivo();

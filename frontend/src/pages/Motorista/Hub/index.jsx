@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-import "./Hub.css"
+import './styles.css'
 
-import estacionamentoService from "../../services/estacionamentoService"
-import { useAuth } from "../../context/AuthContext"
+import estacionamentoService from '@/services/estacionamentoService'
+import { useAuth } from '@/context/AuthContext'
 
 function normalizar(texto) {
     return texto

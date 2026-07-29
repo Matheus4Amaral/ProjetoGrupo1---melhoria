@@ -1,25 +1,25 @@
 import { Navigate, Route, Routes } from "react-router-dom"
 
-import Login from "../pages/autenticacao/Login"
-import Cadastro from "../pages/autenticacao/Cadastro"
-import Painel from "../pages/painel"
+import Login from '@/pages/Autenticacao/Login'
+import Cadastro from '@/pages/Autenticacao/Cadastro'
+import Painel from '@/pages/Painel'
 
 import PrivateRoute from "./PrivateRoute"
 
-import AdminLayout from "../layouts/AdminLayout"
-import MotoristaLayout from "../layouts/MotoristaLayout"
-import Hub from "../pages/motorista/Hub"
-import EstacionamentoVagas from "../pages/motorista/EstacionamentoVagas"
-import MeusVeiculos from "../pages/motorista/MeusVeiculos"
-import Dashboard from "../pages/administrador/Dashboard"
-import Veiculos from "../pages/administrador/Veiculos"
-import Estacionamento from "../pages/administrador/Estacionamento"
-import EditarEstacionamento from "../pages/administrador/EditarEstacionamento"
-import Pisos from "../pages/administrador/Pisos"
-import Turnos from "../pages/administrador/Turnos"
-import EditarPiso from "../pages/administrador/EditarPiso"
-import Vagas from "../pages/administrador/Vagas"
-import EditarVaga from "../pages/administrador/EditarVaga"
+import AdminLayout from '@/layouts/AdminLayout'
+import MotoristaLayout from '@/layouts/MotoristaLayout'
+import Hub from '@/pages/Motorista/Hub'
+import EstacionamentoVagas from '@/pages/Motorista/EstacionamentoVagas'
+import MeusVeiculos from '@/pages/Motorista/MeusVeiculos'
+import Dashboard from '@/pages/Administrador/Dashboard'
+import Veiculos from '@/pages/Administrador/Veiculos'
+import Estacionamento from '@/pages/Administrador/Estacionamento'
+import EditarEstacionamento from '@/pages/Administrador/EditarEstacionamento'
+import Pisos from '@/pages/Administrador/Pisos'
+import Turnos from '@/pages/Administrador/Turnos'
+import EditarPiso from '@/pages/Administrador/EditarPiso'
+import Vagas from '@/pages/Administrador/Vagas'
+import EditarVaga from '@/pages/Administrador/EditarVaga'
 
 export default function AppRoutes() {
     return (

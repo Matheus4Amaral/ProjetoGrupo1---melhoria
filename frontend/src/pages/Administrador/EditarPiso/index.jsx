@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
-import "./Pisos.css"
+import '../Pisos/styles.css'
 
-import Button from "../../components/Button"
-import Input from "../../components/Input"
+import Button from '@/components/Button'
+import Input from '@/components/Input'
 
-import pisoService from "../../services/pisoService"
-import estacionamentoService from "../../services/estacionamentoService"
+import pisoService from '@/services/pisoService'
+import estacionamentoService from '@/services/estacionamentoService'
 
 const FORMULARIO_INICIAL = {
     codigo: "",

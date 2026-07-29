@@ -1,15 +1,15 @@
 import { useCallback, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-import "./Estacionamento.css"
+import './styles.css'
 
-import Button from "../../components/Button"
-import Input from "../../components/Input"
-import CidadeSelect from "../../components/CidadeSelect"
+import Button from '@/components/Button'
+import Input from '@/components/Input'
+import CidadeSelect from '@/components/CidadeSelect'
 
-import estacionamentoService from "../../services/estacionamentoService"
-import { useAuth } from "../../context/AuthContext"
-import { useEstacionamentoAtivo } from "../../context/EstacionamentoAtivoContext"
+import estacionamentoService from '@/services/estacionamentoService'
+import { useAuth } from '@/context/AuthContext'
+import { useEstacionamentoAtivo } from '@/context/EstacionamentoAtivoContext'
 
 const FORMULARIO_INICIAL = {
     nome: "",

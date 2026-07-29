@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react"
 
-import autenticacaoService from "../services/autenticacaoService"
+import autenticacaoService from '@/services/autenticacaoService'
 
 const AuthContext = createContext(null)
 

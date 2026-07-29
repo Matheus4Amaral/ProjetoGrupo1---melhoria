@@ -1,8 +1,8 @@
 import { Link, NavLink } from "react-router-dom"
 
-import "./MotoristaLayout.css"
+import './styles.css'
 
-import { useAuth } from "../context/AuthContext"
+import { useAuth } from '@/context/AuthContext'
 
 export default function MotoristaLayout({ children }) {
     const { usuario, logout } = useAuth()

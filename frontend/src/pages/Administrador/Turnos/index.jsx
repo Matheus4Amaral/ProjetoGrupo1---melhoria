@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import turnoService from '../../services/turnoService'
-import '../administrador/Dashboard.css'
+import turnoService from '@/services/turnoService'
+import '../Dashboard/styles.css'
 
 export default function Turnos() {
   const [turnos, setTurnos] = useState([])

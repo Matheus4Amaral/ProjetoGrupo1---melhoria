@@ -1,10 +1,10 @@
-import "./styles.css"
+import './styles.css'
 
-import Container from "../../components/Container"
-import Button from "../../components/Button"
-import Text from "../../components/Text"
+import Container from '@/components/Container'
+import Button from '@/components/Button'
+import Text from '@/components/Text'
 
-import { useAuth } from "../../context/AuthContext"
+import { useAuth } from '@/context/AuthContext'
 
 export default function Painel() {
     const { usuario, logout } = useAuth()

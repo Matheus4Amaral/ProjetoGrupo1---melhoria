@@ -1,8 +1,8 @@
 import { useRef, useState } from "react"
 
-import "./styles.css"
+import './styles.css'
 
-import cidadeService from "../../services/cidadeService"
+import cidadeService from '@/services/cidadeService'
 
 const ATRASO_BUSCA_MS = 350
 const TAMANHO_MINIMO_BUSCA = 2

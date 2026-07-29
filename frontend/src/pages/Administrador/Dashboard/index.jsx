@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import './Dashboard.css';
+import './styles.css';
 
-import vagaService from '../../services/vagaService';
-import reservaService from '../../services/reservaService';
-import { useEstacionamentoAtivo } from '../../context/EstacionamentoAtivoContext';
+import vagaService from '@/services/vagaService';
+import reservaService from '@/services/reservaService';
+import { useEstacionamentoAtivo } from '@/context/EstacionamentoAtivoContext';
 
 const CORES = {
   livres: '#3EC1F4',

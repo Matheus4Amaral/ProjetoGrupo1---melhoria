@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import veiculoService from '../../services/veiculoService'
-import '../administrador/Dashboard.css'
+import veiculoService from '@/services/veiculoService'
+import '../Dashboard/styles.css'
 
 export default function Veiculos() {
   const [veiculos, setVeiculos] = useState([])

@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from "react"
 import { Link } from "react-router-dom"
 
-import "./MeusVeiculos.css"
+import './styles.css'
 
-import veiculoService from "../../services/veiculoService"
-import { useAuth } from "../../context/AuthContext"
+import veiculoService from '@/services/veiculoService'
+import { useAuth } from '@/context/AuthContext'
 
 const FORMULARIO_INICIAL = {
     placa: "",
