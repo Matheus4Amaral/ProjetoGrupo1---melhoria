@@ -1,4 +1,5 @@
 const { Router } = require('express')
+const authMiddleware = require('../../../middlewares/authMiddleware')
 
 const AutenticacaoController = require('../controller/AutenticacaoController')
 
@@ -48,5 +49,6 @@ const rotas = Router()
  *               $ref: '#/components/schemas/Error'
  */
 rotas.post('/login', AutenticacaoController.login)
+rotas.post('/verificar-senha', authMiddleware, AutenticacaoController.verificarSenha)
 
 module.exports = rotas

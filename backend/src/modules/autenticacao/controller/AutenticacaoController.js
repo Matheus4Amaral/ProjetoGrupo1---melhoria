@@ -16,6 +16,20 @@ class AutenticacaoController {
             })
         }
     }
+
+    async verificarSenha(req, res) {
+        try {
+            const { senha } = req.body
+
+            await AutenticacaoService.verificarSenha(req.usuario.id, senha)
+
+            return res.status(200).json({ sucesso: true })
+        } catch (error) {
+            return res.status(401).json({
+                erro: error.message
+            })
+        }
+    }
 }
 
 module.exports = new AutenticacaoController()

@@ -40,6 +40,26 @@ class AutenticacaoService {
             pessoa: pessoaSemSenha
         }
     }
+
+    async verificarSenha(id, senha) {
+        if (!senha) {
+            throw new Error('Informe a senha.');
+        }
+
+        const pessoa = await PessoaRepository.buscarPessoaComSenhaPorId(id);
+
+        if (!pessoa) {
+            throw new Error('Usuário não encontrado.');
+        }
+
+        const senhaValida = await bcrypt.compare(senha, pessoa.senha);
+
+        if (!senhaValida) {
+            throw new Error('Senha incorreta.');
+        }
+
+        return true;
+    }
 }
 
 module.exports = new AutenticacaoService()

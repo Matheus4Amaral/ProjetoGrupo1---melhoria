@@ -82,6 +82,12 @@ class PessoaRepository {
             .first()
     }
 
+    async buscarPessoaComSenhaPorId(id) {
+        return await db('pessoa')
+            .where({ id })
+            .first()
+    }
+
     async editarPessoa(id, dadosPessoa) {
         return await db('pessoa')
             .where({ id })
