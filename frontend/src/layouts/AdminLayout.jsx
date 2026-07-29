@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import './AdminLayout.css';
 import { useAuth } from '../context/AuthContext';
@@ -64,17 +65,79 @@ function obterTitulo(pathname) {
 export default function AdminLayout({ children }) {
   const { usuario, logout } = useAuth();
   const { pathname } = useLocation();
+  const [sidebarRecolhida, setSidebarRecolhida] = useState(false);
+  const [menuMobileAberto, setMenuMobileAberto] = useState(false);
 
   const { eyebrow, titulo } = obterTitulo(pathname);
 
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 720px)');
+    const fecharAoSairDoMobile = (event) => {
+      if (!event.matches) {
+        setMenuMobileAberto(false);
+      }
+    };
+
+    mediaQuery.addEventListener('change', fecharAoSairDoMobile);
+    return () => mediaQuery.removeEventListener('change', fecharAoSairDoMobile);
+  }, []);
+
+  useEffect(() => {
+    if (!menuMobileAberto) {
+      return undefined;
+    }
+
+    const overflowAnterior = document.body.style.overflow;
+    const fecharComEscape = (event) => {
+      if (event.key === 'Escape') {
+        setMenuMobileAberto(false);
+      }
+    };
+
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', fecharComEscape);
+
+    return () => {
+      document.body.style.overflow = overflowAnterior;
+      document.removeEventListener('keydown', fecharComEscape);
+    };
+  }, [menuMobileAberto]);
+
+  const fecharMenuMobile = () => setMenuMobileAberto(false);
+
   return (
     <EstacionamentoAtivoProvider>
-    <div className="app">
-      <aside className="sidebar">
-        <div className="brand-mark"><span className="dot"></span> <span>HubParking</span></div>
+    <div className={`app${sidebarRecolhida ? ' sidebar-recolhida' : ''}${menuMobileAberto ? ' menu-mobile-aberto' : ''}`}>
+      <aside className="sidebar" id="admin-sidebar" aria-label="Navegação principal">
+        <div className="sidebar-header">
+          <div className="brand-mark"><span className="dot"></span> <span>HubParking</span></div>
+          <button
+            type="button"
+            className="sidebar-toggle"
+            onClick={() => setSidebarRecolhida((recolhida) => !recolhida)}
+            aria-label={sidebarRecolhida ? 'Expandir barra lateral' : 'Recolher barra lateral'}
+            aria-expanded={!sidebarRecolhida}
+            aria-controls="admin-sidebar"
+            title={sidebarRecolhida ? 'Expandir menu' : 'Exibir somente ícones'}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d={sidebarRecolhida ? 'm9 6 6 6-6 6' : 'm15 6-6 6 6 6'} stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            className="sidebar-mobile-close"
+            onClick={fecharMenuMobile}
+            aria-label="Fechar menu"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="m6 6 12 12M18 6 6 18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+            </svg>
+          </button>
+        </div>
 
         <div className="nav-group-label">Visão geral</div>
-        <NavLink to="/admin/dashboard" className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}>
+        <NavLink to="/admin/dashboard" onClick={fecharMenuMobile} title="Dashboard" className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 13h8V3H3v10Zm10 8h8V11h-8v10ZM3 21h8v-6H3v6ZM13 3v6h8V3h-8Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" /></svg>
           <span>Dashboard</span>
         </NavLink>
@@ -82,6 +145,8 @@ export default function AdminLayout({ children }) {
         <div className="nav-group-label">Cadastros</div>
         <NavLink
           to="/admin/estacionamento"
+          onClick={fecharMenuMobile}
+          title="Estacionamento"
           className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" /></svg>
@@ -95,6 +160,8 @@ export default function AdminLayout({ children }) {
 
         <NavLink
           to="/admin/pisos"
+          onClick={fecharMenuMobile}
+          title="Pisos"
           className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 8h18M3 14h18M6 4h12v16H6V4Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" /></svg>
@@ -104,6 +171,8 @@ export default function AdminLayout({ children }) {
         <div className="nav-group-label">Operação</div>
         <NavLink
           to="/admin/turnos"
+          onClick={fecharMenuMobile}
+          title="Turnos"
           className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.8" /><path d="M12 7v5l3.5 2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>
@@ -112,12 +181,14 @@ export default function AdminLayout({ children }) {
 
           <NavLink
             to="/admin/vagas"
+            onClick={fecharMenuMobile}
+            title="Vagas"
             className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="7" height="16" rx="1.4" stroke="currentColor" strokeWidth="1.8" /><rect x="14" y="4" width="7" height="16" rx="1.4" stroke="currentColor" strokeWidth="1.8" /></svg>
             <span>Vagas</span>
         </NavLink>
-        <NavLink to="/admin/veiculos" className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}>
+        <NavLink to="/admin/veiculos" onClick={fecharMenuMobile} title="Veículos" className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 16V11l2-5h12l2 5v5" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" /><path d="M2 16h20v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-1H6v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-3Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" /><circle cx="7" cy="16" r="1.4" fill="currentColor" /><circle cx="17" cy="16" r="1.4" fill="currentColor" /></svg>
           <span>Veículos</span>          
         </NavLink>
@@ -137,6 +208,18 @@ export default function AdminLayout({ children }) {
 
       <div className="main">
         <div className="topbar">
+          <button
+            type="button"
+            className="menu-hamburguer"
+            onClick={() => setMenuMobileAberto(true)}
+            aria-label="Abrir menu"
+            aria-expanded={menuMobileAberto}
+            aria-controls="admin-sidebar"
+          >
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+            </svg>
+          </button>
           <div className="title-block">
             <div className="eyebrow" id="topbar-eyebrow">{eyebrow}</div>
             <h1 id="topbar-title">{titulo}</h1>
@@ -159,6 +242,14 @@ export default function AdminLayout({ children }) {
           {children}
         </div>
       </div>
+
+      <button
+        type="button"
+        className="sidebar-overlay"
+        onClick={fecharMenuMobile}
+        aria-label="Fechar menu"
+        tabIndex={menuMobileAberto ? 0 : -1}
+      />
     </div>
     </EstacionamentoAtivoProvider>
   );

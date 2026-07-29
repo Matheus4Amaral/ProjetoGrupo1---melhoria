@@ -137,8 +137,9 @@ export default function EditarEstacionamento() {
 
     return (
         <section className="screen active" id="screen-estacionamento">
-            <div className="estac-card">
+            
 
+            <div className="estac-card">
                 <div className="estac-card-head">
                     <div>
                         <h3>Editar estacionamento</h3>

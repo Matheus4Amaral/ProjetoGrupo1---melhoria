@@ -194,8 +194,8 @@ export default function Estacionamento() {
     if (modo === "cadastro") {
         return (
             <section className="screen active" id="screen-estacionamento">
+                
                 <div className="estac-card">
-
                     <div className="estac-card-head">
                         <div>
                             <h3>Cadastrar estacionamento</h3>
@@ -331,15 +331,18 @@ export default function Estacionamento() {
                                 />
                             </div>
 
-                            <Input
-                                id="telefone"
-                                type="text"
-                                placeholder="(00) 00000-0000"
-                                value={formulario.telefone}
-                                onChange={handleChange("telefone")}
-                                maxLength={15}
-                                inputMode="numeric"
-                            />
+                            <div className="estac-campo">
+                                <label htmlFor="telefone">Telefone</label>
+                                <Input
+                                    id="telefone"
+                                    type="text"
+                                    placeholder="(00) 00000-0000"
+                                    value={formulario.telefone}
+                                    onChange={handleChange("telefone")}
+                                    maxLength={15}
+                                    inputMode="numeric"
+                                />
+                            </div>
                         </div>
 
                         <label className="estac-checkbox">
@@ -377,8 +380,9 @@ export default function Estacionamento() {
 
     return (
         <section className="screen active" id="screen-estacionamento">
-            <div className="estac-card estac-card--lista">
+            
 
+            <div className="estac-card estac-card--lista">
                 <div className="estac-card-head">
                     <div>
                         <h3>Estacionamentos cadastrados</h3>

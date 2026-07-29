@@ -152,7 +152,7 @@ export default function Dashboard() {
           </div>
 
           <div className="grid-2">
-            <div className="card card-pad">
+            <div className="card card-pad movimentacoes-card">
               <div className="card-head">
                 <div>
                   <h3>Movimentações recentes</h3>
@@ -164,12 +164,12 @@ export default function Dashboard() {
                 <tbody id="dash-activity-body">
                   {!carregando && movimentacoes.map((m) => (
                     <tr key={m.id}>
-                      <td className="dash-mono">{m.motorista_nome || '—'}</td>
-                      <td className="dash-mono">{m.placa}</td>
-                      <td>{m.vaga_nome} · {m.piso_nome}</td>
-                      <td>{m.desocupado_em ? 'Saída' : 'Entrada'}</td>
-                      <td>{formatarHorario(m.desocupado_em || m.estacionado_em)}</td>
-                      <td>
+                      <td className="dash-mono" data-label="Motorista">{m.motorista_nome || '—'}</td>
+                      <td className="dash-mono" data-label="Placa">{m.placa}</td>
+                      <td data-label="Vaga">{m.vaga_nome} · {m.piso_nome}</td>
+                      <td data-label="Movimento">{m.desocupado_em ? 'Saída' : 'Entrada'}</td>
+                      <td data-label="Horário">{formatarHorario(m.desocupado_em || m.estacionado_em)}</td>
+                      <td data-label="Status">
                         <span className={`dash-selo ${m.desocupado_em ? 'dash-selo--encerrada' : 'dash-selo--ativa'}`}>
                           {m.desocupado_em ? 'Encerrada' : 'No pátio'}
                         </span>
@@ -183,7 +183,7 @@ export default function Dashboard() {
               )}
             </div>
 
-            <div className="card card-pad">
+            <div className="card card-pad distribuicao-card">
               <div className="card-head"><div><h3>Distribuição das vagas</h3><div className="hint">Situação atual</div></div></div>
               <div className="donut-wrap">
                 <svg width="128" height="128" viewBox="0 0 42 42">
@@ -199,8 +199,8 @@ export default function Dashboard() {
                       strokeDashoffset={s.offset}
                     ></circle>
                   ))}
-                  <text x="21" y="19" textAnchor="middle" fontFamily="Space Grotesk" fontSize="6" fill="#17313E" fontWeight="700">{resumo.total}</text>
-                  <text x="21" y="25.5" textAnchor="middle" fontFamily="Inter" fontSize="3.4" fill="#84959c">vagas</text>
+                  <text className="donut-total" x="21" y="19" textAnchor="middle" fontFamily="Space Grotesk" fontSize="6" fontWeight="700">{resumo.total}</text>
+                  <text className="donut-label" x="21" y="25.5" textAnchor="middle" fontFamily="Inter" fontSize="3.4">vagas</text>
                 </svg>
                 <div className="donut-legend">
                   <div><span className="sw" style={{background:CORES.livres}}></span> Livres <b>{resumo.livres}</b></div>
