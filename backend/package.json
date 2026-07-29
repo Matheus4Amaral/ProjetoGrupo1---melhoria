@@ -14,6 +14,7 @@
   "scripts": {
     "start": "node app.js",
     "test": "jest --runInBand",
+    "dev": "node --watch app.js",
     "test:watch": "jest --watch"
   },
   "allowScripts": {

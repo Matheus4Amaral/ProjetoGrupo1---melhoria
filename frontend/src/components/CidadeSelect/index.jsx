@@ -34,7 +34,7 @@ export default function CidadeSelect({
         timeoutBuscaRef.current = setTimeout(async () => {
             try {
                 const resultado = await cidadeService.buscarCidades(valor.trim())
-                setOpcoes(resultado)
+                setOpcoes(resultado || [])
             } catch {
                 setOpcoes([])
             } finally {
@@ -88,7 +88,7 @@ export default function CidadeSelect({
                         <li className="cidade-select-info">Buscando...</li>
                     )}
 
-                    {!carregando && opcoes.length === 0 && (
+                    {!carregando && opcoes?.length === 0 && (
                         <li className="cidade-select-info">Nenhuma cidade encontrada</li>
                     )}
 

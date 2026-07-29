@@ -22,17 +22,19 @@ class VeiculoRepository {
 
     async listarTodosVeiculos() {
         return await db('veiculo')
+            .join('pessoa', 'pessoa.id', 'veiculo.pessoa_id')
             .select(
-                'id',
-                'placa',
-                'modelo',
-                'marca',
-                'ano',
-                'combustivel',
-                'cor',
-                'pessoa_id',
-                'criado_em',
-                'atualizado_em'
+                'veiculo.id',
+                'veiculo.placa',
+                'veiculo.modelo',
+                'veiculo.marca',
+                'veiculo.ano',
+                'veiculo.combustivel',
+                'veiculo.cor',
+                'veiculo.pessoa_id',
+                'pessoa.nome as proprietario_nome',
+                'veiculo.criado_em',
+                'veiculo.atualizado_em'
             )
     }
 

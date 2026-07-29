@@ -32,12 +32,14 @@ function SeletorEstacionamento() {
   );
 }
 
+
 const TITULOS = {
   '/admin/dashboard': { eyebrow: 'Visão geral', titulo: 'Dashboard' },
   '/admin/estacionamento': { eyebrow: 'Cadastros', titulo: 'Estacionamento' },
-  '/admin/pisos': { eyebrow: 'Cadastros', titulo: 'Pisos' }, '/admin/turnos': { eyebrow: 'Operação', titulo: 'Turnos' },
   '/admin/pisos': { eyebrow: 'Cadastros', titulo: 'Pisos' },
+  '/admin/turnos': { eyebrow: 'Operação', titulo: 'Turnos' },
   '/admin/vagas': { eyebrow: 'Operação', titulo: 'Vagas' },
+  '/admin/veiculos': { eyebrow: 'Cadastros', titulo: 'Veículos' },
 };
 
 const TITULO_PADRAO = { eyebrow: 'Visão geral', titulo: 'Dashboard' };
@@ -85,10 +87,10 @@ export default function AdminLayout({ children }) {
           <span>Estacionamento</span>
         </NavLink>
 
-        <button className="nav-item" data-screen="pessoas">
+        {/* <button className="nav-item" data-screen="pessoas">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3.2" stroke="currentColor" strokeWidth="1.8" /><path d="M3.5 20c.6-3.4 3-5.4 5.5-5.4s4.9 2 5.5 5.4M15.5 8.3a3 3 0 1 1 3.6 2.95M20.5 20c-.4-2.3-1.6-4-3.4-4.9" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>
           <span>Pessoas</span>
-        </button>
+        </button> */}
 
         <NavLink
           to="/admin/pisos"

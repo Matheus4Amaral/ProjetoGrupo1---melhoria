@@ -307,7 +307,12 @@ export default function Vagas() {
                                 <tbody>
                                     {vagas.map((vaga) => (
                                         <tr key={vaga.id}>
-                                            <td>{vaga.nome}</td>
+                                             <td>
+                                                <div className="vaga-nome-principal">{vaga.nome}</div>
+                                                <div className="vaga-nome-proprietario">
+                                                    {vaga.motorista_nome || "Sem veículo"}
+                                                </div>
+                                            </td>
                                             <td className="vaga-tabela-mono">{vaga.codigo}</td>
                                             <td>{vaga.piso_nome}</td>
                                             <td>

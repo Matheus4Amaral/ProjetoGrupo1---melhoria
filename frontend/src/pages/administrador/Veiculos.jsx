@@ -31,6 +31,7 @@ export default function Veiculos() {
           <table>
             <thead>
               <tr>
+                <th>Proprietário</th>
                 <th>Placa</th>
                 <th>Modelo</th>
                 <th>Marca</th>
@@ -44,6 +45,7 @@ export default function Veiculos() {
               )}
               {veiculos.map(v => (
                 <tr key={v.id}>
+                  <td>{v.proprietario_nome}</td>
                   <td className="cell-mono">{v.placa}</td>
                   <td>{v.modelo}</td>
                   <td>{v.marca}</td>
