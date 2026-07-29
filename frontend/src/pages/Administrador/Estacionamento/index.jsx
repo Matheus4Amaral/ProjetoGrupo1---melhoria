@@ -22,6 +22,8 @@ const FORMULARIO_INICIAL = {
     email: "",
     telefone: "",
     ativo: true,
+    qtd_pisos: 1,
+    qtd_vagas_por_piso: 10,
 }
 
 export default function Estacionamento() {
@@ -118,6 +120,19 @@ export default function Estacionamento() {
             return
         }
 
+        const qtdPisos = Number(formulario.qtd_pisos)
+        const qtdVagas = Number(formulario.qtd_vagas_por_piso)
+
+        if (!Number.isInteger(qtdPisos) || qtdPisos < 1) {
+            setErro("A quantidade de pisos deve ser no mínimo 1.")
+            return
+        }
+
+        if (!Number.isInteger(qtdVagas) || qtdVagas < 1) {
+            setErro("A quantidade de vagas por piso deve ser no mínimo 1.")
+            return
+        }
+
         setSalvando(true)
 
         try {
@@ -134,6 +149,8 @@ export default function Estacionamento() {
                 cidade_id: cidade.id,
                 // Vincula o estacionamento ao gerente logado (ele vira o dono).
                 pessoa_id: usuario.id,
+                qtd_pisos: qtdPisos,
+                qtd_vagas_por_piso: qtdVagas,
             }
 
             if (formulario.inscricao_estadual.trim() !== "") {
@@ -299,6 +316,34 @@ export default function Estacionamento() {
                                     placeholder="Opcional"
                                     value={formulario.telefone}
                                     onChange={handleChange("telefone")}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="estac-linha">
+                            <div className="estac-campo">
+                                <label htmlFor="qtd_pisos">Quantidade de pisos</label>
+                                <Input
+                                    id="qtd_pisos"
+                                    type="number"
+                                    min="1"
+                                    step="1"
+                                    value={formulario.qtd_pisos}
+                                    onChange={handleChange("qtd_pisos")}
+                                    required
+                                />
+                            </div>
+
+                            <div className="estac-campo">
+                                <label htmlFor="qtd_vagas_por_piso">Quantidade de vagas por piso</label>
+                                <Input
+                                    id="qtd_vagas_por_piso"
+                                    type="number"
+                                    min="1"
+                                    step="1"
+                                    value={formulario.qtd_vagas_por_piso}
+                                    onChange={handleChange("qtd_vagas_por_piso")}
+                                    required
                                 />
                             </div>
                         </div>
