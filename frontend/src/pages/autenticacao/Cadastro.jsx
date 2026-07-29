@@ -1,305 +1,338 @@
-import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import {Eye, EyeOff} from "lucide-react";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react";
 
-import "./Auth.css"
+import "./Auth.css";
 
-import Container from "../../components/Container"
-import Button from "../../components/Button"
-import Input from "../../components/Input"
-import Text from "../../components/Text"
-import CidadeSelect from "../../components/CidadeSelect"
+import Container from "../../components/Container";
+import Button from "../../components/Button";
+import Input from "../../components/Input";
+import Text from "../../components/Text";
+import CidadeSelect from "../../components/CidadeSelect";
 
-import Logo from "../../assets/logo.png"
-import autenticacaoService from "../../services/autenticacaoService"
+import Logo from "../../assets/logo.png";
+import autenticacaoService from "../../services/autenticacaoService";
+import { validarCpf } from "../../utils/validarCpf";
 
 const FORMULARIO_INICIAL = {
-    tipo: "motorista",
-    nome: "",
-    email: "",
-    cpf: "",
-    senha: "",
-    confirmarSenha: "",
-    logradouro: "",
-    bairro: "",
-    numero: "",
-    complemento: "",
-    cidade_id: "",
-}
+  tipo: "motorista",
+  nome: "",
+  email: "",
+  cpf: "",
+  senha: "",
+  confirmarSenha: "",
+  logradouro: "",
+  bairro: "",
+  numero: "",
+  complemento: "",
+  cidade_id: "",
+};
 
 export default function Cadastro() {
-    const navigate = useNavigate()
+  const navigate = useNavigate();
 
-    const [formulario, setFormulario] = useState(FORMULARIO_INICIAL)
-    const [erro, setErro] = useState("")
-    const [carregando, setCarregando] = useState(false)
-    const [showPassword, setShowPassword] = useState(false); // Estado do botão de visualisar senha
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [formulario, setFormulario] = useState(FORMULARIO_INICIAL);
+  const [erro, setErro] = useState("");
+  const [carregando, setCarregando] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // Estado do botão de visualisar senha
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  function handleChange(campo) {
+    return (e) =>
+      setFormulario((atual) => ({ ...atual, [campo]: e.target.value }));
+  }
 
-    function handleChange(campo) {
-        return (e) => setFormulario((atual) => ({ ...atual, [campo]: e.target.value }))
+  function selecionarTipo(tipo) {
+    setFormulario((atual) => ({ ...atual, tipo }));
+  }
+
+  function handleSelecionarCidade(cidade) {
+    setFormulario((atual) => ({ ...atual, cidade_id: cidade?.id || "" }));
+  }
+
+  function handleChangeCpf(e) {
+    const apenasNumeros = e.target.value.replace(/\D/g, "").slice(0, 11);
+    setFormulario((atual) => ({ ...atual, cpf: apenasNumeros }));
+  }
+
+  async function handleCadastro(e) {
+    e.preventDefault();
+    setErro("");
+
+    if (formulario.senha !== formulario.confirmarSenha) {
+      setErro("As senhas não coincidem.");
+      return;
     }
 
-    function selecionarTipo(tipo) {
-        setFormulario((atual) => ({ ...atual, tipo }))
+    if (!validarCpf(formulario.cpf)) {
+      setErro("Informe um CPF válido.");
+      return;
     }
 
-    function handleSelecionarCidade(cidade) {
-        setFormulario((atual) => ({ ...atual, cidade_id: cidade?.id || "" }))
+    if (!formulario.cidade_id) {
+      setErro("Selecione uma cidade na lista de sugestões.");
+      return;
     }
 
-    async function handleCadastro(e) {
-        e.preventDefault()
-        setErro("")
+    setCarregando(true);
 
-        if (formulario.senha !== formulario.confirmarSenha) {
-            setErro("As senhas não coincidem.")
-            return
-        }
+    try {
+      const {
+        tipo,
+        nome,
+        email,
+        cpf,
+        senha,
+        logradouro,
+        bairro,
+        numero,
+        complemento,
+        cidade_id,
+      } = formulario;
 
-        if (!formulario.cidade_id) {
-            setErro("Selecione uma cidade na lista de sugestões.")
-            return
-        }
+      await autenticacaoService.cadastrar({
+        tipo,
+        nome,
+        email,
+        cpf,
+        senha,
+        logradouro,
+        bairro,
+        complemento,
+        cidade_id,
+        numero: Number(numero),
+      });
 
-        setCarregando(true)
-
-        try {
-            const {
-                tipo, nome, email, cpf, senha,
-                logradouro, bairro, numero, complemento, cidade_id,
-            } = formulario
-
-            await autenticacaoService.cadastrar({
-                tipo, nome, email, cpf, senha,
-                logradouro, bairro, complemento, cidade_id,
-                numero: Number(numero),
-            })
-
-            navigate("/login", { state: { cadastroConcluido: true } })
-        } catch (error) {
-            setErro(error.message)
-        } finally {
-            setCarregando(false)
-        }
+      navigate("/login", { state: { cadastroConcluido: true } });
+    } catch (error) {
+      setErro(error.message);
+    } finally {
+      setCarregando(false);
     }
+  }
 
-    return (
-        <Container>
-            <div className="auth-card auth-card--largo">
+  return (
+    <Container>
+      <div className="auth-card auth-card--largo">
+        <div className="auth-brand">
+          <div className="auth-brand-logo">
+            <img src={Logo} alt="HubParking" />
+            <span>HubParking</span>
+          </div>
 
-                <div className="auth-brand">
-                    <div className="auth-brand-logo">
-                        <img src={Logo} alt="HubParking" />
-                        <span>HubParking</span>
-                    </div>
+          <div className="auth-brand-bars">
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+          </div>
 
-                    <div className="auth-brand-bars">
-                        <span />
-                        <span />
-                        <span />
-                        <span />
-                        <span />
-                    </div>
+          <Text className="auth-brand-titulo">Comece a usar o HubParking.</Text>
 
-                    <Text className="auth-brand-titulo">
-                        Comece a usar o HubParking.
-                    </Text>
+          <Text className="auth-brand-subtitulo">
+            Cadastre-se para reservar vagas, acompanhar seu histórico e
+            gerenciar seus veículos em um só lugar.
+          </Text>
+        </div>
 
-                    <Text className="auth-brand-subtitulo">
-                        Cadastre-se para reservar vagas, acompanhar seu histórico e gerenciar seus veículos em um só lugar.
-                    </Text>
-                </div>
+        <form className="auth-form" onSubmit={handleCadastro}>
+          <span className="auth-eyebrow">Novo cadastro</span>
 
-                <form className="auth-form" onSubmit={handleCadastro}>
-                    <span className="auth-eyebrow">Novo cadastro</span>
+          <Text className="auth-titulo">Criar conta</Text>
 
-                    <Text className="auth-titulo">
-                        Criar conta
-                    </Text>
+          <Text className="auth-subtitulo">
+            Preencha seus dados para começar a usar o HubParking.
+          </Text>
 
-                    <Text className="auth-subtitulo">
-                        Preencha seus dados para começar a usar o HubParking.
-                    </Text>
+          <div className="auth-campo">
+            <label>Como você vai usar o HubParking?</label>
+            <div
+              className="auth-tipo"
+              role="radiogroup"
+              aria-label="Tipo de conta"
+            >
+              <button
+                type="button"
+                role="radio"
+                aria-checked={formulario.tipo === "motorista"}
+                className={`auth-tipo-opcao${formulario.tipo === "motorista" ? " auth-tipo-opcao--ativo" : ""}`}
+                onClick={() => selecionarTipo("motorista")}
+              >
+                <span className="auth-tipo-titulo">Sou motorista</span>
+                <span className="auth-tipo-descricao">
+                  Quero encontrar e reservar vagas.
+                </span>
+              </button>
 
-                    <div className="auth-campo">
-                        <label>Como você vai usar o HubParking?</label>
-                        <div className="auth-tipo" role="radiogroup" aria-label="Tipo de conta">
-                            <button
-                                type="button"
-                                role="radio"
-                                aria-checked={formulario.tipo === "motorista"}
-                                className={`auth-tipo-opcao${formulario.tipo === "motorista" ? " auth-tipo-opcao--ativo" : ""}`}
-                                onClick={() => selecionarTipo("motorista")}
-                            >
-                                <span className="auth-tipo-titulo">Sou motorista</span>
-                                <span className="auth-tipo-descricao">Quero encontrar e reservar vagas.</span>
-                            </button>
-
-                            <button
-                                type="button"
-                                role="radio"
-                                aria-checked={formulario.tipo === "gerente"}
-                                className={`auth-tipo-opcao${formulario.tipo === "gerente" ? " auth-tipo-opcao--ativo" : ""}`}
-                                onClick={() => selecionarTipo("gerente")}
-                            >
-                                <span className="auth-tipo-titulo">Sou gerente</span>
-                                <span className="auth-tipo-descricao">Quero gerenciar meus estacionamentos.</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div className="auth-campo">
-                        <label htmlFor="nome">Nome completo</label>
-                        <Input
-                            id="nome"
-                            placeholder="Seu nome completo"
-                            value={formulario.nome}
-                            onChange={handleChange("nome")}
-                            required
-                        />
-                    </div>
-
-                    <div className="auth-linha">
-                        <div className="auth-campo">
-                            <label htmlFor="email">E-mail</label>
-                            <Input
-                                id="email"
-                                type="email"
-                                placeholder="voce@email.com"
-                                value={formulario.email}
-                                onChange={handleChange("email")}
-                                required
-                            />
-                        </div>
-
-                        <div className="auth-campo">
-                            <label htmlFor="cpf">CPF</label>
-                            <Input
-                                type="number"
-                                id="cpf"
-                                placeholder="Somente números"
-                                value={formulario.cpf}
-                                onChange={handleChange("cpf")}
-                                required
-                                
-                            />
-                        </div>
-                    </div>
-
-                    <div className="auth-linha">
-                        <div className="showPassword">
-                            <div className="auth-campo">
-                                <label htmlFor="senha">Senha</label>
-                                <Input
-                                    id="senha"
-                                    type={showPassword ? "text" : "password"} // Se mostrar a senha for true o input vira tipo text , mas se for false o input vira tipo password
-                                    placeholder="Senha"
-                                    value={formulario.senha}
-                                    onChange={handleChange("senha")}
-                                    required
-                                />
-                                <button 
-                                    type = "button"
-                                    onClick = {() => setShowPassword(!showPassword)}
-                                    className="btn-eye"
-                                > 
-                                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}  {/* Exibe os icones de "olho" de acordo se for true ou false */}
-                                </button>
-
-                            </div>
-                        </div>
-
-                        <div className="showPassword">
-                            <div className="auth-campo">
-                                <label htmlFor="confirmarSenha">Confirmar senha</label>
-                                <Input
-                                    id="confirmarSenha"
-                                    type={showConfirmPassword ? "text" : "password"}
-                                    placeholder="Confirmar a senha"
-                                    value={formulario.confirmarSenha}
-                                    onChange={handleChange("confirmarSenha")}
-                                    required
-                                />
-
-                                <button 
-                                    type = "button"
-                                    onClick = {() => setShowConfirmPassword(!showConfirmPassword)}
-                                    className="btn-eye"
-                                > 
-                                    {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                                </button>
-                            </div>
-                                                </div>
-                        </div>
-
-                    <div className="auth-campo">
-                        <label htmlFor="logradouro">Logradouro</label>
-                        <Input
-                            id="logradouro"
-                            placeholder="Rua, avenida..."
-                            value={formulario.logradouro}
-                            onChange={handleChange("logradouro")}
-                            required
-                        />
-                    </div>
-
-                    <div className="auth-linha">
-                        <div className="auth-campo">
-                            <label htmlFor="bairro">Bairro</label>
-                            <Input
-                                id="bairro"
-                                value={formulario.bairro}
-                                onChange={handleChange("bairro")}
-                                required
-                            />
-                        </div>
-
-                        <div className="auth-campo">
-                            <label htmlFor="numero">Número</label>
-                            <Input
-                                id="numero"
-                                type="number"
-                                value={formulario.numero}
-                                onChange={handleChange("numero")}
-                                required
-                            />
-                        </div>
-                    </div>
-
-                    <div className="auth-linha">
-                        <div className="auth-campo">
-                            <label htmlFor="complemento">Complemento (opcional)</label>
-                            <Input
-                                id="complemento"
-                                value={formulario.complemento}
-                                onChange={handleChange("complemento")}
-                            />
-                        </div>
-
-                        <div className="auth-campo">
-                            <label htmlFor="cidade_id">Cidade</label>
-                            <CidadeSelect
-                                id="cidade_id"
-                                required
-                                onSelecionar={handleSelecionarCidade}
-                            />
-                        </div>
-                    </div>
-
-                    {erro && <Text className="auth-erro">{erro}</Text>}
-
-                    <Button type="submit" disabled={carregando}>
-                        {carregando ? "Criando conta..." : "Criar conta"}
-                    </Button>
-
-                    <Text className="auth-rodape">
-                        Já tem conta? <Link to="/login">Entrar</Link>
-                    </Text>
-                </form>
-
+              <button
+                type="button"
+                role="radio"
+                aria-checked={formulario.tipo === "gerente"}
+                className={`auth-tipo-opcao${formulario.tipo === "gerente" ? " auth-tipo-opcao--ativo" : ""}`}
+                onClick={() => selecionarTipo("gerente")}
+              >
+                <span className="auth-tipo-titulo">Sou gerente</span>
+                <span className="auth-tipo-descricao">
+                  Quero gerenciar meus estacionamentos.
+                </span>
+              </button>
             </div>
-        </Container>
-    )
+          </div>
+
+          <div className="auth-campo">
+            <label htmlFor="nome">Nome completo</label>
+            <Input
+              id="nome"
+              placeholder="Seu nome completo"
+              value={formulario.nome}
+              onChange={handleChange("nome")}
+              required
+            />
+          </div>
+
+          <div className="auth-linha">
+            <div className="auth-campo">
+              <label htmlFor="email">E-mail</label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="voce@email.com"
+                value={formulario.email}
+                onChange={handleChange("email")}
+                required
+              />
+            </div>
+
+            <div className="auth-campo">
+              <label htmlFor="cpf">CPF</label>
+              <Input
+                type="number"
+                id="cpf"
+                placeholder="Somente números"
+                value={formulario.cpf}
+                onChange={handleChange("cpf")}
+                maxLength={11}
+                required
+              />
+            </div>
+          </div>
+
+          <div className="auth-linha">
+            <div className="showPassword">
+              <div className="auth-campo">
+                <label htmlFor="senha">Senha</label>
+                <Input
+                  id="senha"
+                  type={showPassword ? "text" : "password"} // Se mostrar a senha for true o input vira tipo text , mas se for false o input vira tipo password
+                  placeholder="Senha"
+                  value={formulario.senha}
+                  onChange={handleChange("senha")}
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="btn-eye"
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}{" "}
+                  {/* Exibe os icones de "olho" de acordo se for true ou false */}
+                </button>
+              </div>
+            </div>
+
+            <div className="showPassword">
+              <div className="auth-campo">
+                <label htmlFor="confirmarSenha">Confirmar senha</label>
+                <Input
+                  id="confirmarSenha"
+                  type={showConfirmPassword ? "text" : "password"}
+                  placeholder="Confirmar a senha"
+                  value={formulario.confirmarSenha}
+                  onChange={handleChange("confirmarSenha")}
+                  required
+                />
+
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="btn-eye"
+                >
+                  {showConfirmPassword ? (
+                    <EyeOff size={20} />
+                  ) : (
+                    <Eye size={20} />
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="auth-campo">
+            <label htmlFor="logradouro">Logradouro</label>
+            <Input
+              id="logradouro"
+              placeholder="Rua, avenida..."
+              value={formulario.logradouro}
+              onChange={handleChange("logradouro")}
+              required
+            />
+          </div>
+
+          <div className="auth-linha">
+            <div className="auth-campo">
+              <label htmlFor="bairro">Bairro</label>
+              <Input
+                id="bairro"
+                value={formulario.bairro}
+                onChange={handleChange("bairro")}
+                required
+              />
+            </div>
+
+            <div className="auth-campo">
+              <label htmlFor="numero">Número</label>
+              <Input
+                id="numero"
+                type="number"
+                value={formulario.numero}
+                onChange={handleChange("numero")}
+                required
+              />
+            </div>
+          </div>
+
+          <div className="auth-linha">
+            <div className="auth-campo">
+              <label htmlFor="complemento">Complemento (opcional)</label>
+              <Input
+                id="complemento"
+                value={formulario.complemento}
+                onChange={handleChange("complemento")}
+              />
+            </div>
+
+            <div className="auth-campo">
+              <label htmlFor="cidade_id">Cidade</label>
+              <CidadeSelect
+                id="cidade_id"
+                required
+                onSelecionar={handleSelecionarCidade}
+              />
+            </div>
+          </div>
+
+          {erro && <Text className="auth-erro">{erro}</Text>}
+
+          <Button type="submit" disabled={carregando}>
+            {carregando ? "Criando conta..." : "Criar conta"}
+          </Button>
+
+          <Text className="auth-rodape">
+            Já tem conta? <Link to="/login">Entrar</Link>
+          </Text>
+        </form>
+      </div>
+    </Container>
+  );
 }
