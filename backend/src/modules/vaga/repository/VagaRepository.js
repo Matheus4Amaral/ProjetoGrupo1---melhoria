@@ -34,7 +34,7 @@ class VagaRepository {
   }
 
   async buscarVagaPorPisoId(pisoId) {
-    return db("vaga").where({ pisoId: pisoId }).select("*");
+    return db("vaga").where({ piso_id: pisoId }).select("*");
   }
 
   async buscarVagasPorEstacionamentoId(estacionamentoId) {
@@ -69,6 +69,10 @@ class VagaRepository {
       .returning("*");
 
     return vaga;
+  }
+
+  async excluirVaga(id) {
+    await db("vaga").where({ id }).del();
   }
 }
 

@@ -106,6 +106,26 @@ class EstacionamentoService {
             throw new Error('Estacionamento não encontrado.')
         }
 
+        const pisos = await PisoRepository.buscarPisosPorEstacionamentoId(id)
+
+        for (const piso of pisos) {
+            const vagas = await VagaRepository.buscarVagaPorPisoId(piso.id)
+            const vagasOcupadas = vagas.filter(v => v.is_ocupada)
+            if (vagasOcupadas.length > 0) {
+                throw new Error(`Não é possível excluir o estacionamento. A vaga '${vagasOcupadas[0].nome}' no piso '${piso.nome}' está ocupada.`)
+            }
+        }
+
+        for (const piso of pisos) {
+            const vagas = await VagaRepository.buscarVagaPorPisoId(piso.id)
+            for (const vaga of vagas) {
+                await VagaRepository.excluirVaga(vaga.id)
+            }
+            await PisoRepository.excluirPiso(piso.id)
+        }
+
+        await GerenteEstacionamentoRepository.removerVinculosPorEstacionamento(id)
+
         return await EstacionamentoRepository.excluirEstacionamento(id)
     }
 }

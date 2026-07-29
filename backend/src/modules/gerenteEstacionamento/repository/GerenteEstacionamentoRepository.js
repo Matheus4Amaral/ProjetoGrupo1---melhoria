@@ -12,6 +12,12 @@ class GerenteEstacionamentoRepository {
         return vinculo
     }
 
+    async removerVinculosPorEstacionamento(estacionamentoId) {
+        return await db("gerente_estacionamento")
+            .where({ estacionamento_id: estacionamentoId })
+            .del()
+    }
+
     async existeVinculo(pessoaId, estacionamentoId) {
         const vinculo = await db("gerente_estacionamento")
             .where({ pessoa_id: pessoaId, estacionamento_id: estacionamentoId })
