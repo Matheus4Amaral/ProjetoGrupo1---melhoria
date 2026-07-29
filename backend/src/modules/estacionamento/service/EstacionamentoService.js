@@ -1,10 +1,12 @@
 const EstacionamentoRepository = require("../repository/EstacionamentoRepository")
 const GerenteEstacionamentoRepository = require("../../gerenteEstacionamento/repository/GerenteEstacionamentoRepository")
+const PisoRepository = require("../../piso/repository/PisoRepository")
+const VagaRepository = require("../../vaga/repository/VagaRepository")
 
 class EstacionamentoService {
     async criarEstacionamento(dados) {
         // pessoa_id não é coluna de estacionamento: identifica o gerente dono.
-        const { pessoa_id, ...dadosEstacionamento } = dados
+        const { pessoa_id, qtd_pisos, qtd_vagas_por_piso, ...dadosEstacionamento } = dados
 
         const estacionamentoExistente =  await EstacionamentoRepository.buscarEstacionamentoPorCnpj(dadosEstacionamento.cnpj)
 
@@ -17,6 +19,30 @@ class EstacionamentoService {
         // Quem cria o estacionamento vira gerente dele (autosserviço).
         if (pessoa_id) {
             await GerenteEstacionamentoRepository.vincular(pessoa_id, estacionamento.id)
+        }
+
+        const numPisos = Number(qtd_pisos) || 1;
+        const numVagas = Number(qtd_vagas_por_piso) || 10;
+
+        for (let i = 1; i <= numPisos; i++) {
+            const codigoPiso = `${estacionamento.cnpj}-P${i}`;
+            const piso = await PisoRepository.criarPiso({
+                codigo: codigoPiso,
+                andar: i,
+                nome: `Piso ${i}`,
+                vagas: numVagas,
+                estacionamento_id: estacionamento.id
+            });
+
+            for (let j = 1; j <= numVagas; j++) {
+                const codigoVaga = `${codigoPiso}-V${j}`;
+                await VagaRepository.cadastrarVaga({
+                    piso_id: piso.id,
+                    codigo: codigoVaga,
+                    nome: `Vaga ${j}`,
+                    is_ocupada: false
+                });
+            }
         }
 
         return estacionamento
