@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
+import {Eye , EyeOff} from "lucide-react"
 
 import "./Auth.css"
 
@@ -17,6 +18,7 @@ export default function Login() {
     const { login } = useAuth()
 
     const [formulario, setFormulario] = useState({ email: "", senha: "" })
+    const [showPassword, setShowPassword] = useState(false); // Estado do botão de visualisar senha
     const [erro, setErro] = useState("")
     const [sucesso, setSucesso] = useState(
         location.state?.cadastroConcluido ? "Conta criada com sucesso! Faça login para continuar." : ""
@@ -26,6 +28,8 @@ export default function Login() {
     function handleChange(campo) {
         return (e) => setFormulario((atual) => ({ ...atual, [campo]: e.target.value }))
     }
+
+
 
     async function handleLogin(e) {
         e.preventDefault()
@@ -99,15 +103,26 @@ export default function Login() {
                     </div>
 
                     <div className="auth-campo">
-                        <label htmlFor="senha">Senha</label>
-                        <Input
-                            id="senha"
-                            type="password"
-                            placeholder="••••••••"
-                            value={formulario.senha}
-                            onChange={handleChange("senha")}
-                            required
-                        />
+                        <div className="showPassword">
+                            <label htmlFor="senha">Senha</label>
+                            <Input
+                                id="senha"
+                                type={showPassword ? "text" : "password"}
+                                placeholder="senha"
+                                value={formulario.senha}
+                                onChange={handleChange("senha")}
+                                required
+                            />
+
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="btn-eye"
+                            >
+                            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+
+                            </button>
+                        </div>
                     </div>
 
                     {sucesso && <Text className="auth-sucesso">{sucesso}</Text>}

@@ -230,3 +230,39 @@
         grid-template-columns: 1fr;
     }
 }
+
+.showPassword {
+    position: relative;
+}
+
+.showPassword input {
+    width :100%;
+    padding-right: 40px;
+}
+
+.btn-eye {
+    position: absolute;
+    right : 10px;
+    top: 50%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #3EC1F4;
+     display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.btn-eye:hover {
+  color: #2fb6e0; /* ou a cor de destaque do seu tema */
+  transform: scale(1.1);
+}
+
+.btn-eye:active {
+  transform: scale(0.9);
+}
+
+.btn-eye svg {
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}

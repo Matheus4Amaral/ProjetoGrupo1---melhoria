@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
+import {Eye, EyeOff} from "lucide-react";
 
 import "./Auth.css"
 
@@ -32,6 +33,9 @@ export default function Cadastro() {
     const [formulario, setFormulario] = useState(FORMULARIO_INICIAL)
     const [erro, setErro] = useState("")
     const [carregando, setCarregando] = useState(false)
+    const [showPassword, setShowPassword] = useState(false); // Estado do botão de visualisar senha
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+
 
     function handleChange(campo) {
         return (e) => setFormulario((atual) => ({ ...atual, [campo]: e.target.value }))
@@ -179,35 +183,56 @@ export default function Cadastro() {
                                 value={formulario.cpf}
                                 onChange={handleChange("cpf")}
                                 required
+                                
                             />
                         </div>
                     </div>
 
                     <div className="auth-linha">
-                        <div className="auth-campo">
-                            <label htmlFor="senha">Senha</label>
-                            <Input
-                                id="senha"
-                                type="password"
-                                placeholder="••••••••"
-                                value={formulario.senha}
-                                onChange={handleChange("senha")}
-                                required
-                            />
+                        <div className="showPassword">
+                            <div className="auth-campo">
+                                <label htmlFor="senha">Senha</label>
+                                <Input
+                                    id="senha"
+                                    type={showPassword ? "text" : "password"} // Se mostrar a senha for true o input vira tipo text , mas se for false o input vira tipo password
+                                    placeholder="Senha"
+                                    value={formulario.senha}
+                                    onChange={handleChange("senha")}
+                                    required
+                                />
+                                <button 
+                                    type = "button"
+                                    onClick = {() => setShowPassword(!showPassword)}
+                                    className="btn-eye"
+                                > 
+                                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}  {/* Exibe os icones de "olho" de acordo se for true ou false */}
+                                </button>
+
+                            </div>
                         </div>
 
-                        <div className="auth-campo">
-                            <label htmlFor="confirmarSenha">Confirmar senha</label>
-                            <Input
-                                id="confirmarSenha"
-                                type="password"
-                                placeholder="••••••••"
-                                value={formulario.confirmarSenha}
-                                onChange={handleChange("confirmarSenha")}
-                                required
-                            />
+                        <div className="showPassword">
+                            <div className="auth-campo">
+                                <label htmlFor="confirmarSenha">Confirmar senha</label>
+                                <Input
+                                    id="confirmarSenha"
+                                    type={showConfirmPassword ? "text" : "password"}
+                                    placeholder="Confirmar a senha"
+                                    value={formulario.confirmarSenha}
+                                    onChange={handleChange("confirmarSenha")}
+                                    required
+                                />
+
+                                <button 
+                                    type = "button"
+                                    onClick = {() => setShowConfirmPassword(!showConfirmPassword)}
+                                    className="btn-eye"
+                                > 
+                                    {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                </button>
+                            </div>
+                                                </div>
                         </div>
-                    </div>
 
                     <div className="auth-campo">
                         <label htmlFor="logradouro">Logradouro</label>
