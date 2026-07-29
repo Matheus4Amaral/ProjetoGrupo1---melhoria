@@ -30,10 +30,15 @@ function estaAutenticado() {
     return Boolean(localStorage.getItem(TOKEN_KEY))
 }
 
+async function verificarSenha(senha) {
+    return await api.post('/autenticacao/verificar-senha', { senha })
+}
+
 export default {
     login,
     cadastrar,
     logout,
     obterUsuarioLogado,
     estaAutenticado,
+    verificarSenha,
 }

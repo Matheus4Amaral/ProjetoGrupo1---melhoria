@@ -28,6 +28,10 @@ async function editarVaga(id, dados) {
     return await api.put(`/vagas/${id}`, dados)
 }
 
+async function excluirVaga(id) {
+    return await api.delete(`/vagas/${id}`)
+}
+
 export default {
     cadastrarVaga,
     listarTodasVagas,
@@ -36,4 +40,5 @@ export default {
     buscarVagasPorEstacionamentoId,
     buscarVagasDesocupadas,
     editarVaga,
+    excluirVaga,
 }
