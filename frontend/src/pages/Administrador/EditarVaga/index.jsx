@@ -8,6 +8,7 @@ import Input from '@/components/Input'
 
 import vagaService from '@/services/vagaService'
 import pisoService from '@/services/pisoService'
+import ConfirmacaoSenhaModal from '@/components/ConfirmacaoSenhaModal'
 
 const FORMULARIO_INICIAL = {
     codigo: "",
@@ -27,6 +28,8 @@ export default function EditarVaga() {
     const [carregandoPisos, setCarregandoPisos] = useState(true)
     const [erro, setErro] = useState("")
     const [salvando, setSalvando] = useState(false)
+    const [acaoModal, setAcaoModal] = useState(null)
+    const [excluindo, setExcluindo] = useState(false)
 
     useEffect(() => {
         async function carregarVaga() {
@@ -86,6 +89,18 @@ export default function EditarVaga() {
             return
         }
 
+        setAcaoModal('editar')
+    }
+
+    async function handleConfirmarModal() {
+        if (acaoModal === 'editar') {
+            await efetuarEdicao()
+        } else if (acaoModal === 'excluir') {
+            await efetuarExclusao()
+        }
+    }
+
+    async function efetuarEdicao() {
         setSalvando(true)
 
         try {
@@ -97,11 +112,28 @@ export default function EditarVaga() {
                 piso_id: formulario.piso_id,
             })
 
+            alert("Vaga atualizada com sucesso!")
             navigate("/admin/vagas")
         } catch (error) {
             setErro(error.message)
         } finally {
             setSalvando(false)
+            setAcaoModal(null)
+        }
+    }
+
+    async function efetuarExclusao() {
+        setExcluindo(true)
+        setErro("")
+        try {
+            await vagaService.excluirVaga(id)
+            alert("Vaga excluída com sucesso!")
+            navigate("/admin/vagas")
+        } catch (error) {
+            setErro(error.response?.data?.erro || error.message || "Erro ao excluir vaga")
+        } finally {
+            setExcluindo(false)
+            setAcaoModal(null)
         }
     }
 
@@ -205,20 +237,41 @@ export default function EditarVaga() {
                             <button
                                 type="button"
                                 className="vaga-botao-limpar"
-                                onClick={handleVoltarParaLista}
-                                disabled={salvando}
+                                onClick={() => setAcaoModal('excluir')}
+                                style={{ color: '#dc2626', borderColor: '#fca5a5' }}
+                                disabled={salvando || excluindo || carregandoPisos}
                             >
-                                Cancelar
+                                {excluindo ? "Excluindo..." : "Excluir vaga"}
                             </button>
 
-                            <Button type="submit" disabled={salvando || carregandoPisos}>
-                                {salvando ? "Salvando..." : "Salvar alterações"}
-                            </Button>
+                            <div style={{ display: 'flex', gap: '12px' }}>
+                                <button
+                                    type="button"
+                                    className="vaga-botao-limpar"
+                                    onClick={handleVoltarParaLista}
+                                    disabled={salvando || excluindo}
+                                >
+                                    Cancelar
+                                </button>
+                                <Button type="submit" disabled={salvando || excluindo || carregandoPisos}>
+                                    {salvando ? "Salvando..." : "Salvar alterações"}
+                                </Button>
+                            </div>
                         </div>
 
                     </form>
                 )}
             </div>
+
+            <ConfirmacaoSenhaModal
+                isOpen={acaoModal !== null}
+                onClose={() => setAcaoModal(null)}
+                onConfirm={handleConfirmarModal}
+                titulo={acaoModal === 'editar' ? "Confirmar Edição" : "Excluir Vaga"}
+                mensagem={acaoModal === 'editar' 
+                    ? "Digite sua senha para confirmar a edição desta vaga." 
+                    : "Tem certeza que deseja excluir esta vaga? Digite sua senha para confirmar."}
+            />
         </section>
     )
 }

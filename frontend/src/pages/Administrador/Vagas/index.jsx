@@ -9,6 +9,7 @@ import Input from '@/components/Input'
 import vagaService from '@/services/vagaService'
 import pisoService from '@/services/pisoService'
 import { useEstacionamentoAtivo } from '@/context/EstacionamentoAtivoContext'
+import ConfirmacaoSenhaModal from '@/components/ConfirmacaoSenhaModal'
 
 const FORMULARIO_INICIAL = {
     codigo: "",
@@ -37,6 +38,7 @@ export default function Vagas() {
     const [erro, setErro] = useState("")
     const [sucesso, setSucesso] = useState("")
     const [salvando, setSalvando] = useState(false)
+    const [modalAberto, setModalAberto] = useState(false)
 
     const carregarVagas = useCallback(async () => {
         if (!estacionamentoAtivoId) {
@@ -124,6 +126,10 @@ export default function Vagas() {
             return
         }
 
+        setModalAberto(true)
+    }
+
+    async function handleConfirmarCadastro() {
         setSalvando(true)
 
         try {
@@ -138,6 +144,7 @@ export default function Vagas() {
             setFormulario(FORMULARIO_INICIAL)
             setSucesso(`Vaga cadastrada com sucesso: ${vaga.nome} (${vaga.codigo}).`)
             carregarVagas()
+            setModalAberto(false)
         } catch (error) {
             setErro(error.message)
         } finally {
@@ -271,6 +278,14 @@ export default function Vagas() {
 
                     </form>
                 </div>
+                
+                <ConfirmacaoSenhaModal
+                    isOpen={modalAberto}
+                    onClose={() => setModalAberto(false)}
+                    onConfirm={handleConfirmarCadastro}
+                    titulo="Confirmar Cadastro de Vaga"
+                    mensagem="Digite sua senha para confirmar a criação desta vaga."
+                />
             </section>
         )
     }

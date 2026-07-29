@@ -8,6 +8,7 @@ import Input from '@/components/Input'
 
 import pisoService from '@/services/pisoService'
 import { useEstacionamentoAtivo } from '@/context/EstacionamentoAtivoContext'
+import ConfirmacaoSenhaModal from '@/components/ConfirmacaoSenhaModal'
 
 const FORMULARIO_INICIAL = {
     codigo: "",
@@ -30,6 +31,7 @@ export default function Pisos() {
     const [erro, setErro] = useState("")
     const [sucesso, setSucesso] = useState("")
     const [salvando, setSalvando] = useState(false)
+    const [modalAberto, setModalAberto] = useState(false)
 
     const carregarPisos = useCallback(async () => {
         if (!estacionamentoAtivoId) {
@@ -102,7 +104,14 @@ export default function Pisos() {
             return
         }
 
+        setModalAberto(true)
+    }
+
+    async function handleConfirmarCadastro() {
         setSalvando(true)
+
+        const andar = Number(formulario.andar)
+        const vagas = Number(formulario.vagas)
 
         try {
             const piso = await pisoService.cadastrarPiso({
@@ -116,6 +125,7 @@ export default function Pisos() {
             setFormulario(FORMULARIO_INICIAL)
             setSucesso(`Piso cadastrado com sucesso: ${piso.nome} (${piso.codigo}).`)
             carregarPisos()
+            setModalAberto(false)
         } catch (error) {
             setErro(error.message)
         } finally {
@@ -233,6 +243,14 @@ export default function Pisos() {
 
                     </form>
                 </div>
+
+                <ConfirmacaoSenhaModal
+                    isOpen={modalAberto}
+                    onClose={() => setModalAberto(false)}
+                    onConfirm={handleConfirmarCadastro}
+                    titulo="Confirmar Cadastro de Piso"
+                    mensagem="Digite sua senha para confirmar a criação deste piso e das respectivas vagas."
+                />
             </section>
         )
     }

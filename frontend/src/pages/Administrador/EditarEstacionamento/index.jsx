@@ -6,6 +6,7 @@ import '../Estacionamento/styles.css'
 import Button from '@/components/Button'
 import Input from '@/components/Input'
 import CidadeSelect from '@/components/CidadeSelect'
+import ConfirmacaoSenhaModal from '@/components/ConfirmacaoSenhaModal'
 
 import estacionamentoService from '@/services/estacionamentoService'
 
@@ -33,6 +34,8 @@ export default function EditarEstacionamento() {
     const [carregando, setCarregando] = useState(true)
     const [erro, setErro] = useState("")
     const [salvando, setSalvando] = useState(false)
+    const [modalExcluirAberto, setModalExcluirAberto] = useState(false)
+    const [excluindo, setExcluindo] = useState(false)
 
     useEffect(() => {
         async function carregarEstacionamento() {
@@ -127,11 +130,27 @@ export default function EditarEstacionamento() {
 
             await estacionamentoService.editar(id, dados)
 
+            alert("Estacionamento atualizado com sucesso!")
             navigate("/admin/estacionamento")
         } catch (error) {
             setErro(error.message)
         } finally {
             setSalvando(false)
+        }
+    }
+
+    async function handleConfirmarExclusao() {
+        setExcluindo(true)
+        setErro("")
+        try {
+            await estacionamentoService.excluir(id)
+            alert("Estacionamento excluído com sucesso!")
+            navigate("/admin/estacionamento")
+        } catch (error) {
+            setErro(error.response?.data?.erro || error.message || "Erro ao excluir estacionamento")
+        } finally {
+            setExcluindo(false)
+            setModalExcluirAberto(false)
         }
     }
 
@@ -305,20 +324,39 @@ export default function EditarEstacionamento() {
                             <button
                                 type="button"
                                 className="estac-botao-limpar"
-                                onClick={handleVoltarParaLista}
-                                disabled={salvando}
+                                onClick={() => setModalExcluirAberto(true)}
+                                style={{ color: '#dc2626', borderColor: '#fca5a5' }}
+                                disabled={salvando || excluindo}
                             >
-                                Cancelar
+                                {excluindo ? "Excluindo..." : "Excluir estacionamento"}
                             </button>
 
-                            <Button type="submit" disabled={salvando}>
-                                {salvando ? "Salvando..." : "Salvar alterações"}
-                            </Button>
+                            <div style={{ display: 'flex', gap: '12px' }}>
+                                <button
+                                    type="button"
+                                    className="estac-botao-limpar"
+                                    onClick={handleVoltarParaLista}
+                                    disabled={salvando || excluindo}
+                                >
+                                    Cancelar
+                                </button>
+                                <Button type="submit" disabled={salvando || excluindo}>
+                                    {salvando ? "Salvando..." : "Salvar alterações"}
+                                </Button>
+                            </div>
                         </div>
 
                     </form>
                 )}
             </div>
+            
+            <ConfirmacaoSenhaModal
+                isOpen={modalExcluirAberto}
+                onClose={() => setModalExcluirAberto(false)}
+                onConfirm={handleConfirmarExclusao}
+                titulo="Excluir Estacionamento"
+                mensagem="Tem certeza que deseja excluir este estacionamento por completo? Esta ação não pode ser desfeita. Digite sua senha para confirmar."
+            />
         </section>
     )
 }

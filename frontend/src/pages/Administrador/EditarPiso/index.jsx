@@ -8,6 +8,7 @@ import Input from '@/components/Input'
 
 import pisoService from '@/services/pisoService'
 import estacionamentoService from '@/services/estacionamentoService'
+import ConfirmacaoSenhaModal from '@/components/ConfirmacaoSenhaModal'
 
 const FORMULARIO_INICIAL = {
     codigo: "",
@@ -27,6 +28,8 @@ export default function EditarPiso() {
     const [carregandoEstacionamentos, setCarregandoEstacionamentos] = useState(true)
     const [erro, setErro] = useState("")
     const [salvando, setSalvando] = useState(false)
+    const [acaoModal, setAcaoModal] = useState(null) // 'editar' | 'excluir' | null
+    const [excluindo, setExcluindo] = useState(false)
 
     useEffect(() => {
         async function carregarPiso() {
@@ -94,22 +97,51 @@ export default function EditarPiso() {
             return
         }
 
+        setAcaoModal('editar')
+    }
+
+    async function handleConfirmarModal() {
+        if (acaoModal === 'editar') {
+            await efetuarEdicao()
+        } else if (acaoModal === 'excluir') {
+            await efetuarExclusao()
+        }
+    }
+
+    async function efetuarEdicao() {
         setSalvando(true)
 
         try {
             await pisoService.editarPiso(id, {
                 codigo: formulario.codigo.trim(),
                 nome: formulario.nome.trim(),
-                andar,
-                vagas,
+                andar: Number(formulario.andar),
+                vagas: Number(formulario.vagas),
                 estacionamento_id: formulario.estacionamento_id,
             })
 
+            alert("Piso atualizado com sucesso!")
             navigate("/admin/pisos")
         } catch (error) {
             setErro(error.message)
         } finally {
             setSalvando(false)
+            setAcaoModal(null)
+        }
+    }
+
+    async function efetuarExclusao() {
+        setExcluindo(true)
+        setErro("")
+        try {
+            await pisoService.excluirPiso(id)
+            alert("Piso excluído com sucesso!")
+            navigate("/admin/pisos")
+        } catch (error) {
+            setErro(error.response?.data?.erro || error.message || "Erro ao excluir piso")
+        } finally {
+            setExcluindo(false)
+            setAcaoModal(null)
         }
     }
 
@@ -225,20 +257,41 @@ export default function EditarPiso() {
                             <button
                                 type="button"
                                 className="piso-botao-limpar"
-                                onClick={handleVoltarParaLista}
-                                disabled={salvando}
+                                onClick={() => setAcaoModal('excluir')}
+                                style={{ color: '#dc2626', borderColor: '#fca5a5' }}
+                                disabled={salvando || excluindo || carregandoEstacionamentos}
                             >
-                                Cancelar
+                                {excluindo ? "Excluindo..." : "Excluir piso"}
                             </button>
 
-                            <Button type="submit" disabled={salvando || carregandoEstacionamentos}>
-                                {salvando ? "Salvando..." : "Salvar alterações"}
-                            </Button>
+                            <div style={{ display: 'flex', gap: '12px' }}>
+                                <button
+                                    type="button"
+                                    className="piso-botao-limpar"
+                                    onClick={handleVoltarParaLista}
+                                    disabled={salvando || excluindo}
+                                >
+                                    Cancelar
+                                </button>
+                                <Button type="submit" disabled={salvando || excluindo || carregandoEstacionamentos}>
+                                    {salvando ? "Salvando..." : "Salvar alterações"}
+                                </Button>
+                            </div>
                         </div>
 
                     </form>
                 )}
             </div>
+
+            <ConfirmacaoSenhaModal
+                isOpen={acaoModal !== null}
+                onClose={() => setAcaoModal(null)}
+                onConfirm={handleConfirmarModal}
+                titulo={acaoModal === 'editar' ? "Confirmar Edição" : "Excluir Piso"}
+                mensagem={acaoModal === 'editar' 
+                    ? "Digite sua senha para confirmar a edição deste piso e suas vagas." 
+                    : "Tem certeza que deseja excluir este piso? Digite sua senha para confirmar."}
+            />
         </section>
     )
 }
