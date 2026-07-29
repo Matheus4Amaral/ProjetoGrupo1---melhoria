@@ -88,8 +88,27 @@ class PessoaService {
         }
 
         if (dadosPessoa.senha) {
+            const REGEX_SENHA_FORTE = /^(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}$/
+
+            if (!REGEX_SENHA_FORTE.test(dadosPessoa.senha)) {
+                throw new Error("A nova senha deve ter no mínimo 8 caracteres, incluindo 1 número e 1 caractere especial.")
+            }
+
+            if (!dadosPessoa.senhaAtual) {
+                throw new Error("Informe sua senha atual para definir uma nova senha.")
+            }
+
+            const pessoaComSenha = await PessoaRepository.buscarPessoaComSenhaPorId(id)
+            const senhaAtualConfere = await bcrypt.compare(dadosPessoa.senhaAtual, pessoaComSenha.senha)
+
+            if (!senhaAtualConfere) {
+                throw new Error("Senha atual incorreta.")
+            }
+
             dadosPessoa.senha = await bcrypt.hash(dadosPessoa.senha, 10)
         }
+
+        delete dadosPessoa.senhaAtual
 
         dadosPessoa.atualizado_em = new Date()
 

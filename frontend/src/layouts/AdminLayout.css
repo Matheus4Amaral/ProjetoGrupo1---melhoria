@@ -53,8 +53,10 @@
 }
 .sidebar-foot .who { font-size: 12.5px; font-weight: 600; color: var(--white); }
 .sidebar-foot .role { font-size: 11px; color: rgba(255,255,255,0.55); }
-.logout-btn { margin-left: auto; background: none; border: none; color: rgba(255,255,255,0.55); padding: 4px; }
-.logout-btn:hover { color: var(--white); }
+.sidebar-foot-actions { margin-left: auto; display: flex; align-items: center; gap: 2px; }
+.settings-btn, .logout-btn { background: none; border: none; color: rgba(255,255,255,0.55); padding: 4px; display: flex; }
+.settings-btn:hover, .logout-btn:hover { color: var(--white); }
+.settings-btn.active { color: var(--sky-400); }
 
 /* coluna principal */
 .main { flex: 1; display: flex; flex-direction: column; min-width: 0; }

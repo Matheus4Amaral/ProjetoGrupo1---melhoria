@@ -20,6 +20,7 @@ import Turnos from "../pages/administrador/Turnos"
 import EditarPiso from "../pages/administrador/EditarPiso"
 import Vagas from "../pages/administrador/Vagas"
 import EditarVaga from "../pages/administrador/EditarVaga"
+import Configuracoes from "../pages/conta/Configuracoes"
 
 export default function AppRoutes() {
     return (
@@ -70,6 +71,17 @@ export default function AppRoutes() {
                     </PrivateRoute>
                 }
             />
+
+            <Route
+                path="/motorista/configuracoes"
+                element={
+                    <PrivateRoute>
+                        <MotoristaLayout>
+                            <Configuracoes />
+                        </MotoristaLayout>
+                    </PrivateRoute>
+                }
+            />      
 
             <Route
                 path="/admin/dashboard"
@@ -165,6 +177,17 @@ export default function AppRoutes() {
                     <PrivateRoute apenasAdmin>
                         <AdminLayout>
                             <EditarVaga />
+                        </AdminLayout>
+                    </PrivateRoute>
+                }
+            />
+
+            <Route
+                path="/admin/configuracoes"
+                element={
+                    <PrivateRoute apenasAdmin>
+                        <AdminLayout>
+                            <Configuracoes />
                         </AdminLayout>
                     </PrivateRoute>
                 }

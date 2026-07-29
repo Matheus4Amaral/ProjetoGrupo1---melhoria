@@ -1,0 +1,102 @@
+.config-card {
+  background: var(--white);
+  border: 1px solid #EAEDEF;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-1);
+  padding: 22px 24px;
+  max-width: 760px;
+}
+
+.config-card-head {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.config-card-head h3 { font-family: var(--font-display); font-size: 15.5px; }
+.config-card-head .hint { font-size: 12px; color: #84959c; margin-top: 3px; }
+
+.config-form { display: flex; flex-direction: column; gap: 16px;  margin-top: 25px;}
+
+.config-linha {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.config-campo { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+
+.config-campo label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-700);
+}
+
+.config-secao-titulo {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink-700);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  border-top: 1px solid #EAEDEF;
+  padding-top: 16px;
+  margin-top: 2px;
+}
+
+.config-aviso {
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.config-aviso--erro { background: #FDECEC; color: #A32B2B; border: 1px solid #F5C9C9; }
+.config-aviso--sucesso { background: #E8F7F0; color: #1F7A57; border: 1px solid #C3E9D8; }
+
+.senha-requisitos {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.senha-requisitos li {
+  font-size: 11.5px;
+  color: #A32B2B;
+  position: relative;
+  padding-left: 14px;
+}
+
+.senha-requisitos li::before {
+  content: "✕";
+  position: absolute;
+  left: 0;
+  font-size: 10px;
+}
+
+.senha-requisitos li.ok {
+  color: #1F7A57;
+}
+
+.senha-requisitos li.ok::before {
+  content: "✓";
+}
+
+.config-acoes {
+  display: flex;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.config-acoes .button { width: auto; min-width: 220px; }
+.config-acoes .button:disabled { background: #BFE7F6; cursor: not-allowed; }
+
+@media (max-width: 720px) {
+  .config-linha { grid-template-columns: 1fr; }
+  .config-acoes .button { width: 100%; min-width: 0; }
+  .config-card-head { flex-direction: column; }
+}

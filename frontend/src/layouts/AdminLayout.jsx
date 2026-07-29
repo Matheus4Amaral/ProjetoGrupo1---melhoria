@@ -38,6 +38,7 @@ const TITULOS = {
   '/admin/pisos': { eyebrow: 'Cadastros', titulo: 'Pisos' }, '/admin/turnos': { eyebrow: 'Operação', titulo: 'Turnos' },
   '/admin/pisos': { eyebrow: 'Cadastros', titulo: 'Pisos' },
   '/admin/vagas': { eyebrow: 'Operação', titulo: 'Vagas' },
+  '/admin/configuracoes': { eyebrow: 'Conta', titulo: 'Configurações' },
 };
 
 const TITULO_PADRAO = { eyebrow: 'Visão geral', titulo: 'Dashboard' };
@@ -120,15 +121,20 @@ export default function AdminLayout({ children }) {
         </NavLink>
 
 
-        <div className="sidebar-foot">
+         <div className="sidebar-foot">
           <div className="avatar">{usuario?.nome ? usuario.nome.charAt(0).toUpperCase() : 'U'}</div>
           <div>
             <div className="who">{usuario?.nome || 'Usuário'}</div>
             <div className="role">{usuario?.is_admin ? 'Administrador' : 'Operador'}</div>
           </div>
-          <button className="logout-btn" title="Sair" onClick={logout}>
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M15 3h4a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-4M10 17l5-5-5-5M15 12H3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
-          </button>
+          <div className="sidebar-foot-actions">
+            <NavLink to="/admin/configuracoes" className="settings-btn" title="Configurações da conta">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" strokeWidth="1.8" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1.08 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </NavLink>
+            <button className="logout-btn" title="Sair" onClick={logout}>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M15 3h4a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-4M10 17l5-5-5-5M15 12H3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </button>
+          </div>
         </div>
       </aside>
 

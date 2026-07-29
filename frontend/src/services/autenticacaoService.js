@@ -26,6 +26,10 @@ function obterUsuarioLogado() {
     return usuario ? JSON.parse(usuario) : null
 }
 
+function atualizarUsuarioLocal(pessoa) {
+    localStorage.setItem(USUARIO_KEY, JSON.stringify(pessoa));
+}
+
 function estaAutenticado() {
     return Boolean(localStorage.getItem(TOKEN_KEY))
 }
@@ -35,5 +39,6 @@ export default {
     cadastrar,
     logout,
     obterUsuarioLogado,
+    atualizarUsuarioLocal,
     estaAutenticado,
 }

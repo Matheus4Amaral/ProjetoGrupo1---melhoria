@@ -18,8 +18,13 @@ export function AuthProvider({ children }) {
         setUsuario(null)
     }
 
+    function atualizarUsuario(pessoa) {
+        autenticacaoService.atualizarUsuarioLocal(pessoa);
+        setUsuario(pessoa);
+    }
+
     return (
-        <AuthContext.Provider value={{ usuario, autenticado: Boolean(usuario), login, logout }}>
+        <AuthContext.Provider value={{ usuario, autenticado: Boolean(usuario), login, logout, atualizarUsuario }}>
             {children}
         </AuthContext.Provider>
     )

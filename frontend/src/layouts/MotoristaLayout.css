@@ -72,6 +72,14 @@
 .motorista-usuario-nome { font-size: 12.5px; font-weight: 600; }
 .motorista-usuario-papel { font-size: 11px; color: rgba(255,255,255,0.55); }
 
+.motorista-config {
+  background: none; border: none; padding: 4px;
+  color: rgba(255,255,255,0.55);
+  display: inline-flex; align-items: center;
+}
+.motorista-config:hover { color: var(--white); }
+.motorista-config.active { color: var(--sky-400); }
+
 .motorista-sair {
   background: none; border: none; padding: 4px;
   color: rgba(255,255,255,0.55);
