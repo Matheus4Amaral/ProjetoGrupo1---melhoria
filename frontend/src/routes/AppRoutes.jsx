@@ -2,7 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom"
 
 import Login from '@/pages/Autenticacao/Login'
 import Cadastro from '@/pages/Autenticacao/Cadastro'
-import Painel from '@/pages/Painel'
+import Painel from '@/pages/painel'
 
 import PrivateRoute from "./PrivateRoute"
 
